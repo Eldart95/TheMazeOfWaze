@@ -3,7 +3,6 @@ package dataStructure;
 /**
  * This interface represents the set of operations applicable on a 
  * directional edge(src,dest) in a (directional) weighted graph.
- * 
  * @author YosefTwito
  */
 

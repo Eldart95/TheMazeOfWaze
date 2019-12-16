@@ -16,7 +16,7 @@ import utils.Point3D;
 	 */
 	public int getKey();
 	
-	/** Return the location (of applicable) of this node, if
+	/** Return the location (if applicable) of this node, if
 	 * none return null.
 	 * @return
 	 */
