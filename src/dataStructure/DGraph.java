@@ -3,17 +3,18 @@ package dataStructure;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class DGraph implements graph{
-	
-	 HashMap<Integer, node_data> nodeMap = new HashMap<>();
-	 ArrayList<edge> edges = new ArrayList<edge>();
-	 
+
+	HashMap<Integer, node_data> nodeMap = new HashMap<>();
+	ArrayList<edge> edges = new ArrayList<edge>();
+
 	@Override
 	public node_data getNode(int key) { 
 		if (nodeMap.get(key)==null) { return null; }
 		return nodeMap.get(key); 
-		}
+	}
 
 	@Override
 	public edge_data getEdge(int src, int dest) {
@@ -33,9 +34,9 @@ public class DGraph implements graph{
 		node s = (node)nodeMap.get(src);
 		node d = (node)nodeMap.get(dest);
 		edge e = new edge(src, dest, w);
-		
+
 		edges.add(e);
-		
+
 		s.edgeTo.put(dest, e);
 		d.edgeFrom.put(src, e);
 		s.toN.put(dest, d);
@@ -51,15 +52,45 @@ public class DGraph implements graph{
 		return (Collection<edge_data>)((node)n).edgeTo;
 	}
 
+	/**
+	 * Assistant method for removeNode.
+	 * @param node_id
+	 * @return a collection of all the edges going towards our node.
+	 */
+	public Collection<edge_data> getEFrom(int node_id) {
+		node_data n = nodeMap.get(node_id);
+		return (Collection<edge_data>)((node)n).edgeFrom;
+	}
+
 	@Override
-	public node_data removeNode(int key) {
+	public node_data removeNode(int key) {/////////////////////// gotta check!!! ///////
+
 		if (nodeMap.get(key)==null) { return null; }
+
 		node n = (node)(nodeMap.get(key));
-		
-		ArrayList<edge> toDeleteTo = new ArrayList<edge>();
-		ArrayList<edge> toDeleteFrom = new ArrayList<edge>();
-		
-		return null;
+
+		//remove all the edges coming out of node(key) and their's link to nodes.
+		Collection<edge_data> toDeleteTo = getE(key);
+		Iterator<edge_data> itTo = toDeleteTo.iterator();
+		while (itTo.hasNext()) {
+			edge t = (edge) itTo.next();
+			int s=t.getSrc();
+			int d=t.getDest();
+			removeEdge(s,d);
+		}
+
+		//remove all the edges coming into node(key) and their's link to nodes.
+		Collection<edge_data> toDeleteFrom = getEFrom(key);
+		Iterator<edge_data> itFrom = toDeleteFrom.iterator();
+		while (itFrom.hasNext()) {
+			edge t = (edge) itFrom.next();
+			int s=t.getSrc();
+			int d=t.getDest();
+			removeEdge(s,d);
+		}
+
+		nodeMap.remove(key);
+		return n;
 	}
 
 	@Override
@@ -68,10 +99,10 @@ public class DGraph implements graph{
 		node d = (node)nodeMap.get(dest);
 		if (s.edgeTo.get(dest) == null) { return null; }
 		edge_data e = s.edgeTo.get(dest); 
-		
+
 		s.edgeTo.remove(dest);
 		d.edgeFrom.remove(src);
-		
+
 		for (int i=0; i<edges.size(); i++) {
 			if (edges.get(i)==e) { 
 				edges.remove(i);
@@ -83,7 +114,7 @@ public class DGraph implements graph{
 
 	@Override
 	public int nodeSize() { return nodeMap.size(); }
-	
+
 
 	@Override
 	public int edgeSize() { return edges.size(); }

@@ -6,24 +6,24 @@ import java.util.HashMap;
 import utils.Point3D;
 
 public class node implements node_data {
-	
+
 	public static int keyMaker=0;
-	
+
 	/////////////////////////////////////
 	//////////// Node Fields ////////////
 	/////////////////////////////////////
-	
+
 	private int key, tag;
 	private Point3D location;
 	private double weight;
 	private String info;
-	
-	
+
+
 	HashMap<Integer, node_data>  toN  = new HashMap<>();
 	HashMap<Integer, node_data> fromN = new HashMap<>();
 	//public ArrayList<node>  toN  = new ArrayList<node>();
 	//public ArrayList<node> fromN = new ArrayList<node>();
-	
+
 	HashMap<Integer, edge_data>  edgeTo  = new HashMap<>();
 	HashMap<Integer, edge_data> edgeFrom = new HashMap<>();
 	//public ArrayList<edge>  eTo  = new ArrayList<edge>();
@@ -32,7 +32,7 @@ public class node implements node_data {
 	/////////////////////////////////////
 	/////////// Constructors ////////////
 	/////////////////////////////////////
-	
+
 	public node () {
 		this.key=keyMaker;
 		this.tag=0;
@@ -40,7 +40,7 @@ public class node implements node_data {
 		this.info="";
 		keyMaker++;
 	}
-	
+
 	public node (Point3D loc, double weight) {
 		this.key=keyMaker;
 		this.location=loc;
@@ -49,11 +49,11 @@ public class node implements node_data {
 		this.info="";
 		keyMaker++;
 	}
-	
+
 	/////////////////////////////////////
 	////////// Getters/Setters //////////
 	/////////////////////////////////////
-	
+
 	@Override
 	public int getKey() { return this.key; }
 

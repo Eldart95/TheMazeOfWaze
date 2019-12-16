@@ -13,7 +13,7 @@ public class edge implements edge_data {
 	/////////////////////////////////////
 	/////////// Constructors ////////////
 	/////////////////////////////////////
-	
+
 	public edge(int src, int dest, double w) {
 		this.src=src;
 		this.dest=dest;
@@ -21,11 +21,11 @@ public class edge implements edge_data {
 		this.weight=w;
 		this.info="";
 	}
-	
+
 	/////////////////////////////////////
 	////////// Getters/Setters //////////
 	/////////////////////////////////////
-	
+
 	@Override
 	public int getSrc() { return this.src; }
 
@@ -34,7 +34,7 @@ public class edge implements edge_data {
 
 	@Override
 	public double getWeight() { return this.weight; }
-	
+
 	@Override
 	public String getInfo() { return this.info; }
 
