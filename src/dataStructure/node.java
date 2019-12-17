@@ -18,16 +18,12 @@ public class node implements node_data {
 	private double weight;
 	private String info;
 
+	HashMap<Integer, node_data>  toN  = new HashMap<Integer, node_data>();
+	HashMap<Integer, node_data> fromN = new HashMap<Integer, node_data>();
 
-	HashMap<Integer, node_data>  toN  = new HashMap<>();
-	HashMap<Integer, node_data> fromN = new HashMap<>();
-	//public ArrayList<node>  toN  = new ArrayList<node>();
-	//public ArrayList<node> fromN = new ArrayList<node>();
-
-	HashMap<Integer, edge_data>  edgeTo  = new HashMap<>();
-	HashMap<Integer, edge_data> edgeFrom = new HashMap<>();
-	//public ArrayList<edge>  eTo  = new ArrayList<edge>();
-	//public ArrayList<edge> eFrom = new ArrayList<edge>();
+	HashMap<Integer, edge_data>  edgeTo  = new HashMap<Integer, edge_data>();
+	HashMap<Integer, edge_data> edgeFrom = new HashMap<Integer, edge_data>();
+	
 
 	/////////////////////////////////////
 	/////////// Constructors ////////////
