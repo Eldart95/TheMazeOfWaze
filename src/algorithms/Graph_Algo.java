@@ -20,8 +20,6 @@ import dataStructure.graph;
 import dataStructure.node_data;
 
 /**
- * stam 2
- * 
  * This class represents the set of graph-theory algorithms
  * which should be implemented as part of Ex2.
  * @author YosefTwito and EldarTakach

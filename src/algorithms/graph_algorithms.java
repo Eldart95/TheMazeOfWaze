@@ -14,7 +14,7 @@ import dataStructure.node_data;
  * 5. double shortestPathDist(int src, int dest);
  * 6. List<Node> shortestPath(int src, int dest);
  *
- * @author YosefTwito
+ * @author YosefTwito and EldarTakach
  */
 
 public interface graph_algorithms {
