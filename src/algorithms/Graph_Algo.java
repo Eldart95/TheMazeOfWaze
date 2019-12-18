@@ -125,7 +125,18 @@ public class Graph_Algo implements graph_algorithms{
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		// TODO Auto-generated method stub
-		return null;
+
+
+		//return null;
+		
+		List<node_data> ans = new LinkedList<node_data>();
+		//Give every node >> weight = infinity.
+		//Give src-node >> weight = 0.
+		//while didn't visit every node{
+		//choose minimal node which i didn't visit yet.
+		//sign the node as visited.
+		//for every neighbor of it - compute reaching it, if faster, update.
+		return ans;
 	}
 
 	@Override
