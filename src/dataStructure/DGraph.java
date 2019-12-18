@@ -7,18 +7,18 @@ import java.util.Iterator;
 
 public class DGraph implements graph{
 	
-	//Static counters:
-	private static int edgesCounter=0;
-	private static int MC=0;
-	
 	//DGraph Parameters:
 	public HashMap<Integer, node> nodesMap = new HashMap<Integer, node>();
 	public HashMap<Integer, HashMap<Integer,edge>> edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
+	private int edgesCounter=0;
+	private int MC=0;
 	
 	//Constructor:
 	public DGraph() {
 		this.nodesMap = new HashMap<Integer, node>();
 		this.edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
+		this.edgesCounter=0;
+		this.MC=0;
 	}
 	
 	//Methods:
@@ -49,8 +49,15 @@ public class DGraph implements graph{
 		}
 		else {
 			edge temp = new edge(src,dest,w);
-			this.edgesMap.get(src).put(dest, temp);
-			edgesCounter++;
+			if (this.edgesMap.get(src) == null) {
+				this.edgesMap.put(src, new HashMap<Integer,edge>());
+				this.edgesMap.get(src).put(dest, temp);
+				edgesCounter++;
+			}
+			else {
+				this.edgesMap.get(src).put(dest, temp);
+				edgesCounter++;
+			}
 		}
 	}
 
@@ -69,15 +76,21 @@ public class DGraph implements graph{
 		
 		if (this.nodesMap.get(key)==null) { return null; }
 		
-		node_data ans = new node(nodesMap.get(key));
+		node_data ans = new node(nodesMap.get(key));//for data-return
+		ArrayList<Integer> toD = new ArrayList<Integer>();// to-Delete all empty HashMaps.
 		
 		//remove all edges going into key-node.
-		int size=edgesMap.size();
-		for (int i=0; i<=size; i++) {
-			if (this.edgesMap.get(i).get(key)!=null) {
-				this.edgesMap.get(i).remove(key);
+		this.edgesMap.forEach((k, v) -> {
+			if (v.get(key)!=null) {
+				v.remove(key);
 				edgesCounter--;
+				if (v.isEmpty()) {
+					toD.add(k);
+				}
 			}
+		});
+		for (int i : toD) {
+			this.edgesMap.remove(i);
 		}
 		
 		//remove all edges coming out of key-node.
