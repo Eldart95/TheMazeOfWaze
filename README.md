@@ -1,6 +1,7 @@
 # TheMazeOfWaze
 Created as an Object-Oriented-Programming Project during the second year at Ariel University
 in the Department of Computer Science, 2019.
+Written on Eclipse.
 
 ## Overview
 This project is about Directed Weighted Graphs. Developing a data Structure of it, creating nodes and edges, and handling them in Java.
