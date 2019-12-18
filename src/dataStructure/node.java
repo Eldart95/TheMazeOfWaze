@@ -35,6 +35,12 @@ public class node implements node_data {
 		this.weight=0;
 		this.info="";
 		keyMaker++;
+		
+		toN   = new HashMap<Integer, node_data>();
+		fromN = new HashMap<Integer, node_data>();
+
+		edgeTo   = new HashMap<Integer, edge_data>();
+		edgeFrom = new HashMap<Integer, edge_data>();
 	}
 
 	public node (Point3D loc, double weight) {
@@ -44,6 +50,12 @@ public class node implements node_data {
 		this.weight=weight;
 		this.info="";
 		keyMaker++;
+		
+		toN   = new HashMap<Integer, node_data>();
+		fromN = new HashMap<Integer, node_data>();
+
+		edgeTo   = new HashMap<Integer, edge_data>();
+		edgeFrom = new HashMap<Integer, edge_data>();
 	}
 
 	/////////////////////////////////////
