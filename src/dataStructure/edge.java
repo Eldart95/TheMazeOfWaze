@@ -2,18 +2,12 @@ package dataStructure;
 
 public class edge implements edge_data {
 
-	/////////////////////////////////////
-	//////////// Edge Fields ////////////
-	/////////////////////////////////////
-
+	//Edge parameters:
 	private int src, dest, tag;
 	private double weight;
 	private String info;
 
-	/////////////////////////////////////
-	/////////// Constructors ////////////
-	/////////////////////////////////////
-
+	//Constructors:
 	public edge(int src, int dest, double w) {
 		this.src=src;
 		this.dest=dest;
@@ -21,11 +15,20 @@ public class edge implements edge_data {
 		this.weight=w;
 		this.info="";
 	}
+	
+	/**
+	 * for details only
+	 * @param o
+	 */
+	protected edge(edge o) {
+		this.src=o.src;
+		this.dest=o.dest;
+		this.tag=o.tag;
+		this.weight=o.weight;
+		this.info=o.info;
+	}
 
-	/////////////////////////////////////
-	////////// Getters/Setters //////////
-	/////////////////////////////////////
-
+	//Getters/Setters:
 	@Override
 	public int getSrc() { return this.src; }
 

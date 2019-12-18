@@ -9,38 +9,31 @@ public class node implements node_data {
 
 	public static int keyMaker=0;
 
-	/////////////////////////////////////
-	//////////// Node Fields ////////////
-	/////////////////////////////////////
-
+	//Node Parameters:
 	private int key, tag;
 	private Point3D location;
 	private double weight;
 	private String info;
-
-	public HashMap<Integer, node_data>  toN  = new HashMap<Integer, node_data>();
-	public HashMap<Integer, node_data> fromN = new HashMap<Integer, node_data>();
-
-	public HashMap<Integer, edge_data>  edgeTo  = new HashMap<Integer, edge_data>();
-	public HashMap<Integer, edge_data> edgeFrom = new HashMap<Integer, edge_data>();
-	
-
-	/////////////////////////////////////
-	/////////// Constructors ////////////
-	/////////////////////////////////////
-
+		
+	//Constructors:
 	public node () {
 		this.key=keyMaker;
 		this.tag=0;
 		this.weight=0;
 		this.info="";
 		keyMaker++;
-		
-		toN   = new HashMap<Integer, node_data>();
-		fromN = new HashMap<Integer, node_data>();
-
-		edgeTo   = new HashMap<Integer, edge_data>();
-		edgeFrom = new HashMap<Integer, edge_data>();
+	}
+	
+	/**
+	 * for details only
+	 * @param o
+	 */
+	protected node (node o) {
+		this.key=o.key;
+		this.tag=o.tag;
+		this.weight=o.weight;
+		this.info=o.info;
+		this.location=o.location;
 	}
 
 	public node (Point3D loc, double weight) {
@@ -50,18 +43,9 @@ public class node implements node_data {
 		this.weight=weight;
 		this.info="";
 		keyMaker++;
-		
-		toN   = new HashMap<Integer, node_data>();
-		fromN = new HashMap<Integer, node_data>();
-
-		edgeTo   = new HashMap<Integer, edge_data>();
-		edgeFrom = new HashMap<Integer, edge_data>();
 	}
 
-	/////////////////////////////////////
-	////////// Getters/Setters //////////
-	/////////////////////////////////////
-
+	//Getters/Setters:
 	@Override
 	public int getKey() { return this.key; }
 
