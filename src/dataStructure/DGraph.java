@@ -56,6 +56,7 @@ public class DGraph implements graph{
 	public void addNode(node_data n) {
 		int key=n.getKey();
 		this.nodesMap.put(key, (node)n);
+		this.MC++;
 	}
 
 	@Override
@@ -69,10 +70,12 @@ public class DGraph implements graph{
 				this.edgesMap.put(src, new HashMap<Integer,edge>());
 				this.edgesMap.get(src).put(dest, temp);
 				edgesCounter++;
+				this.MC++;
 			}
 			else {
 				this.edgesMap.get(src).put(dest, temp);
 				edgesCounter++;
+				this.MC++;
 			}
 		}
 	}
@@ -100,6 +103,7 @@ public class DGraph implements graph{
 			if (v.get(key)!=null) {
 				v.remove(key);
 				edgesCounter--;
+				this.MC++;
 				if (v.isEmpty()) {
 					toD.add(k);
 				}
@@ -114,6 +118,7 @@ public class DGraph implements graph{
 		this.edgesMap.remove(key);
 		//remove the key-node.
 		this.nodesMap.remove(key);
+		this.MC++;
 
 		return ans;
 	}
@@ -125,6 +130,7 @@ public class DGraph implements graph{
 		
 		this.edgesMap.get(src).remove(dest);
 		edgesCounter--;
+		this.MC++;
 		return e;
 	}
 
