@@ -20,6 +20,7 @@ import dataStructure.edge;
 import dataStructure.graph;
 import dataStructure.node;
 import dataStructure.node_data;
+import utils.Point3D;
 
 /**
  * This class represents the set of graph-theory algorithms
@@ -69,6 +70,8 @@ public class Graph_Algo implements graph_algorithms{
 					if(string1.charAt(i)==',') i++;
 					else {
 						node n = new node();
+						Point3D p = new Point3D((int)(Math.random()+100),(int)(Math.random()+100));
+						n.setLocation(p);
 						nodesMap.put(n.getKey(), n);
 						i++;
 					}
@@ -82,8 +85,9 @@ public class Graph_Algo implements graph_algorithms{
 						int a=Character.getNumericValue(x1);  
 						int b=Character.getNumericValue(x2);  
 						edge n = new edge(a,b,Math.random()+100);
-					//	HashMap<Integer,edge> y = new HashMap(a,n);
-					//	edgesMap.put(a, y);
+						HashMap<Integer,edge> y = new HashMap<>();
+						y.put(b, n);
+						edgesMap.put(a, y);
 						
 					}
 					string1=string1.substring(i+4,string1.length());

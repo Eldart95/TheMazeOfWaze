@@ -26,6 +26,7 @@ public class DGraph implements graph{
 		this.nodesMap=G.nodesMap;
 		this.edgesMap=G.edgesMap;
 		this.MC=G.MC;
+		this.edgesCounter=G.edgesCounter;
 		
 	}
 	
@@ -87,7 +88,7 @@ public class DGraph implements graph{
 		}
 
 	@Override
-	public node_data removeNode(int key) {///////should update going-into delete with forEach //////
+	public node_data removeNode(int key) {
 		
 		if (this.nodesMap.get(key)==null) { return null; }
 		
