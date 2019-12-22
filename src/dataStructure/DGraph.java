@@ -40,6 +40,7 @@ public class DGraph implements graph{
 	public void addNode(node_data n) {
 		int key=n.getKey();
 		this.nodesMap.put(key, (node)n);
+		this.MC++;
 	}
 
 	@Override
@@ -53,10 +54,12 @@ public class DGraph implements graph{
 				this.edgesMap.put(src, new HashMap<Integer,edge>());
 				this.edgesMap.get(src).put(dest, temp);
 				edgesCounter++;
+				this.MC++;
 			}
 			else {
 				this.edgesMap.get(src).put(dest, temp);
 				edgesCounter++;
+				this.MC++;
 			}
 		}
 	}
@@ -72,24 +75,25 @@ public class DGraph implements graph{
 		}
 
 	@Override
-	public node_data removeNode(int key) {///////should update going-into delete with forEach //////
+	public node_data removeNode(int key) {
 		
 		if (this.nodesMap.get(key)==null) { return null; }
 		
 		node_data ans = new node(nodesMap.get(key));//for data-return
-		ArrayList<Integer> toD = new ArrayList<Integer>();// to-Delete all empty HashMaps.
+		ArrayList<Integer> keyToDelete = new ArrayList<Integer>();// to-Delete all empty HashMaps.
 		
 		//remove all edges going into key-node.
 		this.edgesMap.forEach((k, v) -> {
 			if (v.get(key)!=null) {
 				v.remove(key);
 				edgesCounter--;
+				this.MC++;
 				if (v.isEmpty()) {
-					toD.add(k);
+					keyToDelete.add(k);
 				}
 			}
 		});
-		for (int i : toD) {
+		for (int i : keyToDelete) {
 			this.edgesMap.remove(i);
 		}
 		
@@ -98,6 +102,7 @@ public class DGraph implements graph{
 		this.edgesMap.remove(key);
 		//remove the key-node.
 		this.nodesMap.remove(key);
+		this.MC++;
 
 		return ans;
 	}
@@ -109,6 +114,7 @@ public class DGraph implements graph{
 		
 		this.edgesMap.get(src).remove(dest);
 		edgesCounter--;
+		this.MC++;
 		return e;
 	}
 
