@@ -93,12 +93,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent Command) {
 		
-		String str = e.getActionCommand();
+		String str = Command.getActionCommand();
 		
 		if(str.equals("Init Graph ")) {
-			System.out.println("Init Graph ");
+			System.out.println("Init Graph: ");
+			
+			
+			
 			Point3D p1 = new Point3D(100,100);
 			Point3D p2 = new Point3D(200,200);
 			Point3D p3 = new Point3D(300,400);
@@ -110,7 +113,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 		}
 		
 		if(str.equals("Init From textFile ")) {
-			System.out.println("Init From textFile ");
+			System.out.println("Init From textFile: ");
 		}
 		
 		if(str.equals("Save as textFile ")) {
