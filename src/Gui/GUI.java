@@ -16,9 +16,10 @@ import javax.swing.JFrame;
 import utils.Point3D;
 
 /**
- * 
+ * This class makes a gui window to represent a graph and
+ * use the Algorithms from class Graph_Algo on live.
+ * (use the methods and represent it on the gui window while it is still up).
  * @author YosefTwito and EldarTakach
- *
  */
 
 public class GUI extends JFrame implements ActionListener, MouseListener{
@@ -32,36 +33,65 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 	public void paint(Graphics g) {
 		super.paint(g);
 		
+		g.setColor(Color.DARK_GRAY);
+		g.fillOval(l.get(0).ix(), l.get(0).iy() , 8, 8);
+		Point3D prev = new Point3D(l.get(0));
 		
-		for (Point3D p : l) {
-			System.out.println(p);
-			g.setColor(Color.BLUE);
-			g.fillOval((int)p.ix(), (int)p.iy(), 20, 20);
+		for (int i=1; i<l.size(); i++) {
+			g.setColor(Color.DARK_GRAY);
+			g.fillOval(l.get(i).ix(), l.get(i).iy() , 8, 8);
+			
+			g.setColor(Color.yellow);
+			g.drawLine(l.get(i).ix()+4, l.get(i).iy()+4, prev.ix()+4, prev.iy()+4);
+			prev = new Point3D(l.get(i));
 		}
-		g.setColor(Color.black);
-		//g.drawLine(l.get(0).ix(), l.get(0).iy(), l.get(1).ix(), l.get(1).iy());
+			
 	}
 	
 	private void initGUI() {
-		this.setSize(500, 500);
+		this.setSize(1280, 720);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		MenuBar menuBar = new MenuBar();
 		this.setMenuBar(menuBar);
 		
-		Menu t = new Menu("Menu");
-		menuBar.add(t);
+		Menu file = new Menu("File");
+		menuBar.add(file);
 		
-		Menu t2 = new Menu("Menu2");
-		menuBar.add(t2);
+		Menu alg  = new Menu("Algorithms");
+		menuBar.add(alg);
 		
-		MenuItem item1 = new MenuItem("Item1");
+		MenuItem item1 = new MenuItem("Init Graph");
 		item1.addActionListener(this);
-		t.add(item1);
+		file.add(item1);
 		
-		MenuItem item2 = new MenuItem("Item2");
+		MenuItem item2 = new MenuItem("Init From File..");
 		item2.addActionListener(this);
-		t.add(item2);
+		file.add(item2);
+		
+		MenuItem item3 = new MenuItem("Save as png..");
+		item3.addActionListener(this);
+		file.add(item3);
+		
+		MenuItem item4 = new MenuItem("Show Shortest Path");
+		item4.addActionListener(this);
+		alg.add(item4);
+		
+		MenuItem item5 = new MenuItem("Save as png..");
+		item5.addActionListener(this);
+		alg.add(item5);
+		
+		MenuItem item6 = new MenuItem("Save as png..");
+		item6.addActionListener(this);
+		alg.add(item6);
+		
+		MenuItem item7 = new MenuItem("Save as png..");
+		item7.addActionListener(this);
+		alg.add(item7);
+		
+		MenuItem item8 = new MenuItem("Save as png..");
+		item8.addActionListener(this);
+		alg.add(item8);
 		
 		this.addMouseListener(this);
 	}
@@ -71,12 +101,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 		
 		String str = e.getActionCommand();
 		
-		if(str.equals("Item1")) {
-			System.out.println("Item1");
-		}
-		
-		if(str.equals("Item2")) {
-			System.out.println("Item2");
+		if(str.equals("Init Graph")) {
+			System.out.println("Init Graph");
 			Point3D p1 = new Point3D(100,100,0);
 			Point3D p2 = new Point3D(200,200,0);
 			Point3D p3 = new Point3D(300,400,0);
@@ -87,6 +113,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 			this.repaint();
 		}
 		
+		if(str.equals("Init From File..")) {
+			System.out.println("Init From File..");
+		}
+		
+		if(str.equals("Save as png..")) {
+			System.out.println("Save as png..");
+		}
+		
+		if(str.equals("Show Shortest Path")) {
+			System.out.println("Show Shortest Path");
+		}
+		
+		if(str.equals("...")) {
+			System.out.println("...");
+		}
+
 	}
 
 	
