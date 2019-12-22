@@ -55,43 +55,39 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 		MenuBar menuBar = new MenuBar();
 		this.setMenuBar(menuBar);
 		
-		Menu file = new Menu("File");
+		Menu file = new Menu("File ");
 		menuBar.add(file);
 		
-		Menu alg  = new Menu("Algorithms");
+		Menu alg  = new Menu("Algorithms ");
 		menuBar.add(alg);
 		
-		MenuItem item1 = new MenuItem("Init Graph");
+		MenuItem item1 = new MenuItem("Init Graph ");
 		item1.addActionListener(this);
 		file.add(item1);
 		
-		MenuItem item2 = new MenuItem("Init From File..");
+		MenuItem item2 = new MenuItem("Init From textFile ");
 		item2.addActionListener(this);
 		file.add(item2);
 		
-		MenuItem item3 = new MenuItem("Save as png..");
+		MenuItem item3 = new MenuItem("Save as textFile ");
 		item3.addActionListener(this);
 		file.add(item3);
 		
-		MenuItem item4 = new MenuItem("Show Shortest Path");
+		MenuItem item4 = new MenuItem("Save as png ");
 		item4.addActionListener(this);
-		alg.add(item4);
+		file.add(item4);
 		
-		MenuItem item5 = new MenuItem("Save as png..");
+		MenuItem item5 = new MenuItem("Show Shortest Path ");
 		item5.addActionListener(this);
 		alg.add(item5);
 		
-		MenuItem item6 = new MenuItem("Save as png..");
+		MenuItem item6 = new MenuItem("$$ TSP $$ ");
 		item6.addActionListener(this);
 		alg.add(item6);
 		
-		MenuItem item7 = new MenuItem("Save as png..");
+		MenuItem item7 = new MenuItem("Is Conncected ");
 		item7.addActionListener(this);
 		alg.add(item7);
-		
-		MenuItem item8 = new MenuItem("Save as png..");
-		item8.addActionListener(this);
-		alg.add(item8);
 		
 		this.addMouseListener(this);
 	}
@@ -101,11 +97,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 		
 		String str = e.getActionCommand();
 		
-		if(str.equals("Init Graph")) {
-			System.out.println("Init Graph");
-			Point3D p1 = new Point3D(100,100,0);
-			Point3D p2 = new Point3D(200,200,0);
-			Point3D p3 = new Point3D(300,400,0);
+		if(str.equals("Init Graph ")) {
+			System.out.println("Init Graph ");
+			Point3D p1 = new Point3D(100,100);
+			Point3D p2 = new Point3D(200,200);
+			Point3D p3 = new Point3D(300,400);
 			l.add(p1);
 			l.add(p2);
 			l.add(p3);
@@ -113,20 +109,28 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 			this.repaint();
 		}
 		
-		if(str.equals("Init From File..")) {
-			System.out.println("Init From File..");
+		if(str.equals("Init From textFile ")) {
+			System.out.println("Init From textFile ");
 		}
 		
-		if(str.equals("Save as png..")) {
-			System.out.println("Save as png..");
+		if(str.equals("Save as textFile ")) {
+			System.out.println("Save as textFile ");
 		}
 		
-		if(str.equals("Show Shortest Path")) {
-			System.out.println("Show Shortest Path");
+		if(str.equals("Save as png ")) {
+			System.out.println("Save as png ");
 		}
 		
-		if(str.equals("...")) {
-			System.out.println("...");
+		if(str.equals("Show Shortest Path ")) {
+			System.out.println("Show Shortest Path ");
+		}
+		
+		if(str.equals("$$ TSP $$ ")) {
+			System.out.println("$$ TSP $$ ");
+		}
+		
+		if(str.equals("Is Conncected ")) {
+			System.out.println("Is Conncected ");
 		}
 
 	}
