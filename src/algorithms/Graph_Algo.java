@@ -8,15 +8,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonWriter;
 
 import dataStructure.DGraph;
+import dataStructure.edge;
 import dataStructure.graph;
+import dataStructure.node;
 import dataStructure.node_data;
 
 /**
@@ -26,57 +28,100 @@ import dataStructure.node_data;
  */
 
 public class Graph_Algo implements graph_algorithms{
-	LinkedList<graph> gr = new LinkedList<graph>();
+	public HashMap<Integer, node> nodesMap = new HashMap<Integer, node>();
+	public HashMap<Integer, HashMap<Integer,edge>> edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
+	public int edgesCounter=0;
+	public int MC=0;
 
+	
+	public Graph_Algo(DGraph t) {
+		nodesMap.putAll(t.nodesMap);
+		edgesMap.putAll(edgesMap);
+	}
+	
+	
 	@Override
 	public void init(graph g) {
-		gr.add(g);
+		if(g instanceof DGraph) {
+			nodesMap.putAll(((DGraph) g).nodesMap);
+			edgesMap.putAll(((DGraph) g).edgesMap);
+			edgesCounter=((DGraph) g).edgesCounter;
+			MC=((DGraph) g).MC;
+		}
+		else {
+			throw new RuntimeException("Error initialaizing the graph");
+		}
 		
 	}
 
 	@Override
-	//init from json, each iteration the loop takes the node from
-	//the node array and the vertices from the vertices 2d array
-	//construct a node_data out of it and then add to list that
-	//is holding the DGraph
 	public void init(String file_name) {
-		Gson gson = new Gson();	
-		GRAPH G;
-		graph temp = new DGraph();
 		try {
+			File input1 = new File(file_name);
+			FileReader stream1 = new FileReader(input1);
+			BufferedReader buffer1 = new BufferedReader(stream1);
+			String string1 = buffer1.readLine();
 			
-			Reader r = new FileReader(file_name);
-				G = gson.fromJson(r, GRAPH.class);
-				for (int i = 0; i < G.nodes.length; i++) {
-					int n = G.nodes[i];
-					//int v = G.vertices[0][0];
-					//temp.addNode(n);
-					gr.add(temp);
-					
+			while(string1!=null) {
+				string1=string1.substring(string1.charAt(6),string1.charAt(string1.length()-1));
+				int i=0;
+				while(string1.charAt(i)!='\n') {
+					if(string1.charAt(i)==',') i++;
+					else {
+						node n = new node();
+						nodesMap.put(n.getKey(), n);
+						i++;
+					}
+					string1 = string1.substring(string1.charAt(2),string1.charAt(string1.length()));
+				}
+				i++;
+				while(string1.charAt(i)!='\n') {
+					if(string1.charAt(i)=='(') {
+						char x1 = string1.charAt(i+1);
+						char x2 = string1.charAt(i+3);
+						int a=Character.getNumericValue(x1);  
+						int b=Character.getNumericValue(x2);  
+						edge n = new edge(a,b,Math.random()+100);
+					//	HashMap<Integer,edge> y = new HashMap(a,n);
+					//	edgesMap.put(a, y);
+						
+					}
+					string1=string1.substring(i+4,string1.length());
 				}
 				
-			} catch (FileNotFoundException e) {
 				
 			}
-		
-	}
-	public Iterator<graph> iterator() {
-		return gr.iterator();
+		}
+		catch(IOException e) {
+			System.out.println("Cant read file");
+		}
+
 	}
 
+
 	@Override
-	//ver1: write the graph to file with toString
-	//ver2: write the graph to json
 	public void save(String file_name) {
-	/*	Iterator<graph> it = gr.iterator();
+
 		try {
 			PrintWriter write = new PrintWriter(new File(file_name));
 			StringBuilder sb = new StringBuilder();
+			sb.append("Nodes are: ");
+			for(int key:nodesMap.keySet())	{
+				node f = this.nodesMap.get(key);		
+				sb.append(f.toString()+",");
+			}
+			sb.append("\n");
+			sb.append("Edges are: ");
+			for(int key:edgesMap.keySet()) {
+				for(HashMap<Integer, edge> edges:edgesMap.values()) {
+					edge f = edges.get(key);
+					sb.append("("+f.getSrc()+","+f.getDest()+")"+",");
+				}
+			}
+			sb.append("\n");
+				
 			
-			while (it.hasNext()) {
-				graph f = it.next();
-				sb.append(f.toString()+"\n");
-			}	
+		
 			write.write(sb.toString());
 			write.close();
 		} 
@@ -84,35 +129,24 @@ public class Graph_Algo implements graph_algorithms{
 			e.printStackTrace();
 			return;
 		}
-*/		Iterator<graph> it = gr.iterator();
-		Gson gson = new Gson();	
-		GRAPH G;
-		try {
-			JsonWriter  writer = new JsonWriter(new FileWriter("C:\\file.json"));
-			writer.beginObject();
-			writer.name("nodes:");
-			writer.beginArray();
-			
-			
-			while (it.hasNext()) {
-				graph f = it.next();
-				
-				writer.value(f.edgeSize());
-				
-			}
-	        writer.endArray();
-	        writer.endObject();
-	        writer.close();
-			
-			
-		} 
-		catch (IOException e) {
-				e.printStackTrace();
-			}
+		
 	}
+	/*For each vertex u of the graph, mark u as unvisited. Let L be empty.
+	For each vertex u of the graph do Visit(u), where Visit(u) is the recursive subroutine:
+	If u is unvisited then:
+	Mark u as visited.
+	For each out-neighbour v of u, do Visit(v).
+	Prepend u to L.
+	Otherwise do nothing.
+	For each element u of L in order, do Assign(u,u) where Assign(u,root) is the recursive subroutine:
+	If u has not been assigned to a component then:
+	Assign u as belonging to the component whose root is root.
+	For each in-neighbour v of u, do Assign(v,root).
+	Otherwise do nothing.
+	*/
 	@Override
 	public boolean isConnected() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
@@ -124,18 +158,28 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-		// TODO Auto-generated method stub
-
-
-		//return null;
-		
 		List<node_data> ans = new LinkedList<node_data>();
-		//Give every node >> weight = infinity.
-		//Give src-node >> weight = 0.
-		//while didn't visit every node{
-		//choose minimal node which i didn't visit yet.
-		//sign the node as visited.
-		//for every neighbor of it - compute reaching it, if faster, update.
+		for(int key:nodesMap.keySet())	{
+			this.nodesMap.get(key).setWeight(Double.MAX_VALUE);		
+		}
+		
+		this.nodesMap.get(src).setWeight(0);
+		ans.add(this.nodesMap.get(src));
+		
+		for(int key:nodesMap.keySet())	{
+			if(this.nodesMap.get(key)==this.nodesMap.get(dest)) return ans;
+			if(this.nodesMap.get(key).getTag()==1) break;
+			for(int key2:edgesMap.keySet()) {
+				if(edgesMap.get(key).get(src).getSrc()==nodesMap.get(key).getKey()) {
+					nodesMap.get(key).setWeight(edgesMap.get(key2).get(key).getWeight());	
+				}
+				this.nodesMap.get(key).setTag(1);
+			}
+			//for every node, run though the edges and choose the most light edge, add it to the list.
+			}
+			
+		
+
 		return ans;
 	}
 
@@ -147,17 +191,16 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public graph copy() {
-		graph ng = new DGraph();
-		//copy shit
-		return ng;
 		
-	}
-	private class GRAPH{
-		int []nodes = {0};
-		//int [][]arr = new int[2][];
+	
+		graph copy = new DGraph(nodesMap,edgesMap,edgesCounter,MC);
+		return copy;
 		
 		
 	}
+	
+	
+	 
 	
 
 }

@@ -1,3 +1,4 @@
+
 package dataStructure;
 
 import java.util.ArrayList;
@@ -10,8 +11,8 @@ public class DGraph implements graph{
 	//DGraph Parameters:
 	public HashMap<Integer, node> nodesMap = new HashMap<Integer, node>();
 	public HashMap<Integer, HashMap<Integer,edge>> edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
-	private int edgesCounter=0;
-	private int MC=0;
+	public int edgesCounter=0;
+	public int MC=0;
 	
 	//Constructor:
 	public DGraph() {
@@ -19,6 +20,20 @@ public class DGraph implements graph{
 		this.edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
 		this.edgesCounter=0;
 		this.MC=0;
+	}
+	
+	public DGraph(DGraph G) {
+		this.nodesMap=G.nodesMap;
+		this.edgesMap=G.edgesMap;
+		this.MC=G.MC;
+		
+	}
+	
+	public DGraph(HashMap<Integer, node> nodesMap,HashMap<Integer, HashMap<Integer,edge>> edgesMap,int EC,int MC) {
+		this.nodesMap = new HashMap<Integer, node>();
+		this.edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
+		this.edgesCounter=EC;
+		this.MC=MC;
 	}
 	
 	//Methods:
@@ -40,7 +55,6 @@ public class DGraph implements graph{
 	public void addNode(node_data n) {
 		int key=n.getKey();
 		this.nodesMap.put(key, (node)n);
-		this.MC++;
 	}
 
 	@Override
@@ -54,12 +68,10 @@ public class DGraph implements graph{
 				this.edgesMap.put(src, new HashMap<Integer,edge>());
 				this.edgesMap.get(src).put(dest, temp);
 				edgesCounter++;
-				this.MC++;
 			}
 			else {
 				this.edgesMap.get(src).put(dest, temp);
 				edgesCounter++;
-				this.MC++;
 			}
 		}
 	}
@@ -75,25 +87,24 @@ public class DGraph implements graph{
 		}
 
 	@Override
-	public node_data removeNode(int key) {
+	public node_data removeNode(int key) {///////should update going-into delete with forEach //////
 		
 		if (this.nodesMap.get(key)==null) { return null; }
 		
 		node_data ans = new node(nodesMap.get(key));//for data-return
-		ArrayList<Integer> keyToDelete = new ArrayList<Integer>();// to-Delete all empty HashMaps.
+		ArrayList<Integer> toD = new ArrayList<Integer>();// to-Delete all empty HashMaps.
 		
 		//remove all edges going into key-node.
 		this.edgesMap.forEach((k, v) -> {
 			if (v.get(key)!=null) {
 				v.remove(key);
 				edgesCounter--;
-				this.MC++;
 				if (v.isEmpty()) {
-					keyToDelete.add(k);
+					toD.add(k);
 				}
 			}
 		});
-		for (int i : keyToDelete) {
+		for (int i : toD) {
 			this.edgesMap.remove(i);
 		}
 		
@@ -102,7 +113,6 @@ public class DGraph implements graph{
 		this.edgesMap.remove(key);
 		//remove the key-node.
 		this.nodesMap.remove(key);
-		this.MC++;
 
 		return ans;
 	}
@@ -114,7 +124,6 @@ public class DGraph implements graph{
 		
 		this.edgesMap.get(src).remove(dest);
 		edgesCounter--;
-		this.MC++;
 		return e;
 	}
 
@@ -128,3 +137,4 @@ public class DGraph implements graph{
 	public int getMC() { return MC; }
 	
 }
+
