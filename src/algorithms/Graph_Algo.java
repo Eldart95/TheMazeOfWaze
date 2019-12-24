@@ -17,6 +17,7 @@ import java.util.List;
 
 import dataStructure.DGraph;
 import dataStructure.edge;
+import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node;
 import dataStructure.node_data;
@@ -29,30 +30,22 @@ import utils.Point3D;
  */
 
 public class Graph_Algo implements graph_algorithms{
-	public HashMap<Integer, node> nodesMap = new HashMap<Integer, node>();
-	public HashMap<Integer, HashMap<Integer,edge>> edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
+	public HashMap<Integer, node_data> nodesMap = new HashMap<Integer, node_data>();
+	public HashMap<Integer, HashMap<Integer,edge_data>> edgesMap = new HashMap<Integer, HashMap<Integer,edge_data>>();
 	public int edgesCounter=0;
 	public int MC=0;
-
+	private DGraph gr;
 	
-	public Graph_Algo(DGraph t) {
-		nodesMap.putAll(t.nodesMap);
-		edgesMap.putAll(edgesMap);
+	
+	public Graph_Algo(DGraph g) {
+		this.gr=g;
 	}
 	
 	
 	@Override
 	public void init(graph g) {
-		if(g instanceof DGraph) {
-			nodesMap.putAll(((DGraph) g).nodesMap);
-			edgesMap.putAll(((DGraph) g).edgesMap);
-			edgesCounter=((DGraph) g).edgesCounter;
-			MC=((DGraph) g).MC;
-		}
-		else {
-			throw new RuntimeException("Error initialaizing the graph");
-		}
-		
+		if(g instanceof DGraph) { this.gr=(DGraph)g; }
+		else { throw new RuntimeException("Error initialaizing the graph"); }
 	}
 
 	@Override
@@ -85,7 +78,7 @@ public class Graph_Algo implements graph_algorithms{
 						int a=Character.getNumericValue(x1);  
 						int b=Character.getNumericValue(x2);  
 						edge n = new edge(a,b,Math.random()+100);
-						HashMap<Integer,edge> y = new HashMap<>();
+						HashMap<Integer,edge_data> y = new HashMap<>();
 						y.put(b, n);
 						edgesMap.put(a, y);
 						
@@ -111,14 +104,14 @@ public class Graph_Algo implements graph_algorithms{
 			StringBuilder sb = new StringBuilder();
 			sb.append("Nodes are: ");
 			for(int key:nodesMap.keySet())	{
-				node f = this.nodesMap.get(key);		
+				node f = (node)this.nodesMap.get(key);		
 				sb.append(f.toString()+",");
 			}
 			sb.append("\n");
 			sb.append("Edges are: ");
 			for(int key:edgesMap.keySet()) {
-				for(HashMap<Integer, edge> edges:edgesMap.values()) {
-					edge f = edges.get(key);
+				for(HashMap<Integer, edge_data> edges:edgesMap.values()) {
+					edge f = (edge)edges.get(key);
 					sb.append("("+f.getSrc()+","+f.getDest()+")"+",");
 				}
 			}
@@ -195,12 +188,8 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public graph copy() {
-		
-	
-		graph copy = new DGraph(nodesMap,edgesMap,edgesCounter,MC);
+		graph copy = new DGraph(this.gr);
 		return copy;
-		
-		
 	}
 	
 	
