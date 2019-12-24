@@ -34,6 +34,8 @@ public class Graph_Algo implements graph_algorithms{
 	private DGraph gr;
 	
 	
+	public Graph_Algo() {;}
+	
 	public Graph_Algo(DGraph g) {
 		this.gr=g;
 	}

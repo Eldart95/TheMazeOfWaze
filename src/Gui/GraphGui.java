@@ -9,10 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
+
 
 import algorithms.*;
 import dataStructure.*;
@@ -71,15 +76,14 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 					}
 				}	
 			}
-			
-		}
-			
+		}	
 	}
 	
 	
 	private void initGUI(graph g) {
 		this.gr=g;
 		this.setSize(1280, 720);
+		this.setTitle("The Maze Of Waze !");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		MenuBar menuBar = new MenuBar();
@@ -118,6 +122,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 		MenuItem item7 = new MenuItem("Is Conncected ");
 		item7.addActionListener(this);
 		alg.add(item7);
+	 
 		
 		this.addMouseListener(this);
 	}
@@ -125,23 +130,49 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent Command) {
 		String str = Command.getActionCommand();		
+		Graph_Algo t=new Graph_Algo();
+		JFileChooser j;
+		FileNameExtensionFilter filter;
+		
 		switch(str) {
 		
 		case "Init Graph": 
 			System.out.println("Init Graph: ");
-			//this.repaint();
+			initGUI(this.gr);
 			break;
 		
-		case "Init From textFile ": 
+		case "Init From textFile ": ////////////////////////////////////// gotta check /////////////////
 			System.out.println("Init From textFile: ");
-			
+			t=new Graph_Algo();
+
+			j = new JFileChooser(FileSystemView.getFileSystemView());
+			j.setDialogTitle("Init graph out of text file.."); 
+			filter = new FileNameExtensionFilter(" .txt","txt");
+			j.setFileFilter(filter);
+
+			int returnVal = j.showOpenDialog(null);
+			if(returnVal == JFileChooser.APPROVE_OPTION) {
+				System.out.println("You chose to open this file: " + j.getSelectedFile().getName());
+				t.init(j.getSelectedFile().getAbsolutePath());
+			}			
 			break;
 
-		case "Save as textFile ": 
-			System.out.println("Save as textFile ");
-			
+		case "Save as textFile ": ////////////////////////////////////// gotta check /////////////////
+			System.out.println("Save as textFile: ");
+			t=new Graph_Algo();
+
+			j = new JFileChooser(FileSystemView.getFileSystemView());
+			j.setDialogTitle("Save graph to text file.."); 
+			filter = new FileNameExtensionFilter(" .txt","txt");
+			j.setFileFilter(filter);
+
+			int userSelection = j.showSaveDialog(null);
+			if (userSelection == JFileChooser.APPROVE_OPTION) {
+				System.out.println("Save as file: " + j.getSelectedFile().getAbsolutePath());
+				t.save(j.getSelectedFile().getAbsolutePath());
+			}
 			break;
-			
+
 		case "Save as png ": 
 			System.out.println("Save as png ");
 			
