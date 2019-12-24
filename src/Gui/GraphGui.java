@@ -9,11 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
 
-import utils.Point3D;
+import algorithms.*;
+import dataStructure.*;
+import utils.*;
 
 /**
  * This class makes a gui window to represent a graph and
@@ -22,33 +25,60 @@ import utils.Point3D;
  * @author YosefTwito and EldarTakach
  */
 
-public class GUI extends JFrame implements ActionListener, MouseListener{
+public class GraphGui extends JFrame implements ActionListener, MouseListener{
 	
-	LinkedList<Point3D> l = new LinkedList<Point3D>();
+	graph gr;
 	
-	public GUI(){
-		initGUI();
+	public GraphGui(graph g){
+		initGUI(g);
 	}
 	
-	public void paint(Graphics g) {
-		super.paint(g);
+	
+	public void paint(Graphics d) {
+		super.paint(d);
 		
-		g.setColor(Color.DARK_GRAY);
-		g.fillOval(l.get(0).ix(), l.get(0).iy() , 8, 8);
-		Point3D prev = new Point3D(l.get(0));
-		
-		for (int i=1; i<l.size(); i++) {
-			g.setColor(Color.DARK_GRAY);
-			g.fillOval(l.get(i).ix(), l.get(i).iy() , 8, 8);
+		if (gr != null) {
+			//get nodes
+			Collection<node_data> nodes = gr.getV();
 			
-			g.setColor(Color.yellow);
-			g.drawLine(l.get(i).ix()+4, l.get(i).iy()+4, prev.ix()+4, prev.iy()+4);
-			prev = new Point3D(l.get(i));
+			for (node_data n : nodes) {
+				//draw nodes
+				Point3D p = n.getLocation();
+				d.setColor(Color.BLACK);
+				d.fillOval(p.ix(), p.iy(), 10, 10);
+				
+				//draw nodes-key's
+				d.setColor(Color.BLUE);
+				d.drawString(""+n.getKey(), p.ix()-4, p.iy()-4);
+				
+				//check if there are edges
+				if (gr.edgeSize()==0) { continue; }
+				if ((gr.getE(n.getKey())!=null)) {
+					//get edges
+					Collection<edge_data> edges = gr.getE(n.getKey());
+					for (edge_data e : edges) {
+						//draw edges
+						d.setColor(Color.GREEN);
+						
+						Point3D p2 = gr.getNode(e.getDest()).getLocation();
+						d.drawLine(p.ix()+5, p.iy()+5, p2.ix()+5, p2.iy()+5);
+						//draw direction
+						d.setColor(Color.MAGENTA);
+						d.fillOval((int)((p.ix()*0.7)+(0.3*p2.ix()))+5, 1+(int)((p.iy()*0.7)+(0.3*p2.iy())), 8, 8);
+						//draw weight
+						String sss = ""+String.valueOf(e.getWeight());
+						d.drawString(sss, 1+(int)((p.ix()*0.7)+(0.3*p2.ix())), 1+(int)((p.iy()*0.7)+(0.3*p2.iy())));
+					}
+				}	
+			}
+			
 		}
 			
 	}
 	
-	private void initGUI() {
+	
+	private void initGUI(graph g) {
+		this.gr=g;
 		this.setSize(1280, 720);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -61,7 +91,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 		Menu alg  = new Menu("Algorithms ");
 		menuBar.add(alg);
 		
-		MenuItem item1 = new MenuItem("Init Graph ");
+		MenuItem item1 = new MenuItem("Init Graph");
 		item1.addActionListener(this);
 		file.add(item1);
 		
@@ -94,52 +124,46 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
 	@Override
 	public void actionPerformed(ActionEvent Command) {
+		String str = Command.getActionCommand();		
+		switch(str) {
 		
-		String str = Command.getActionCommand();
-		
-		if(str.equals("Init Graph ")) {
+		case "Init Graph": 
 			System.out.println("Init Graph: ");
-			
-			
-			
-			Point3D p1 = new Point3D(100,100);
-			Point3D p2 = new Point3D(200,200);
-			Point3D p3 = new Point3D(300,400);
-			l.add(p1);
-			l.add(p2);
-			l.add(p3);
-			
-			this.repaint();
-		}
+			//this.repaint();
+			break;
 		
-		if(str.equals("Init From textFile ")) {
+		case "Init From textFile ": 
 			System.out.println("Init From textFile: ");
-		}
-		
-		if(str.equals("Save as textFile ")) {
-			System.out.println("Save as textFile ");
-		}
-		
-		if(str.equals("Save as png ")) {
-			System.out.println("Save as png ");
-		}
-		
-		if(str.equals("Show Shortest Path ")) {
-			System.out.println("Show Shortest Path ");
-		}
-		
-		if(str.equals("$$ TSP $$ ")) {
-			System.out.println("$$ TSP $$ ");
-		}
-		
-		if(str.equals("Is Conncected ")) {
-			System.out.println("Is Conncected ");
-		}
+			
+			break;
 
+		case "Save as textFile ": 
+			System.out.println("Save as textFile ");
+			
+			break;
+			
+		case "Save as png ": 
+			System.out.println("Save as png ");
+			
+			break;
+			
+		case "Show Shortest Path ":
+			System.out.println("Show Shortest Path ");
+			
+			break;
+			
+		case "$$ TSP $$ ": 
+			System.out.println("$$ TSP $$ ");
+			break;
+			
+		case "Is Conncected ":
+			System.out.println("Is Conncected ");
+			
+			break;
+			
+		}
 	}
 
-	
-	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("mouseClicked");
