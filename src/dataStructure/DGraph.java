@@ -89,6 +89,7 @@ public class DGraph implements graph{
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
+		if (this.edgesMap.isEmpty()) { return null; }
 		if (this.edgesMap.get(node_id)==null) { return null; }
 		return this.edgesMap.get(node_id).values(); 
 		}
