@@ -9,30 +9,31 @@ import java.util.Iterator;
 public class DGraph implements graph{
 	
 	//DGraph Parameters:
-	public HashMap<Integer, node> nodesMap = new HashMap<Integer, node>();
-	public HashMap<Integer, HashMap<Integer,edge>> edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
+	public HashMap<Integer, node_data> nodesMap = new HashMap<Integer, node_data>();
+	public HashMap<Integer, HashMap<Integer,edge_data>> edgesMap = new HashMap<Integer, HashMap<Integer,edge_data>>();
 	public int edgesCounter=0;
 	public int MC=0;
 	
 	//Constructor:
 	public DGraph() {
-		this.nodesMap = new HashMap<Integer, node>();
-		this.edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
+		this.nodesMap = new HashMap<Integer, node_data>();
+		this.edgesMap = new HashMap<Integer, HashMap<Integer,edge_data>>();
 		this.edgesCounter=0;
 		this.MC=0;
 	}
 	
+	//deep copy.
 	public DGraph(DGraph G) {
-		this.nodesMap=G.nodesMap;
-		this.edgesMap=G.edgesMap;
+		this.nodesMap.putAll(G.nodesMap);
+		this.edgesMap.putAll(G.edgesMap);
 		this.MC=G.MC;
 		this.edgesCounter=G.edgesCounter;
 		
 	}
 	
-	public DGraph(HashMap<Integer, node> nodesMap,HashMap<Integer, HashMap<Integer,edge>> edgesMap,int EC,int MC) {
-		this.nodesMap = new HashMap<Integer, node>();
-		this.edgesMap = new HashMap<Integer, HashMap<Integer,edge>>();
+	public DGraph(HashMap<Integer, node_data> nodesMap,HashMap<Integer, HashMap<Integer,edge_data>> edgesMap,int EC,int MC) {
+		this.nodesMap = new HashMap<Integer, node_data>();
+		this.edgesMap = new HashMap<Integer, HashMap<Integer,edge_data>>();
 		this.edgesCounter=EC;
 		this.MC=MC;
 	}
@@ -67,7 +68,7 @@ public class DGraph implements graph{
 		else {
 			edge temp = new edge(src,dest,w);
 			if (this.edgesMap.get(src) == null) {
-				this.edgesMap.put(src, new HashMap<Integer,edge>());
+				this.edgesMap.put(src, new HashMap<Integer,edge_data>());
 				this.edgesMap.get(src).put(dest, temp);
 				edgesCounter++;
 				this.MC++;
@@ -82,12 +83,14 @@ public class DGraph implements graph{
 
 	@Override
 	public Collection<node_data> getV() {
-		return (Collection<node_data>)this.nodesMap; 
+		if (this.nodesMap.isEmpty()) { return null; }
+		return this.nodesMap.values(); 
 		}
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
-		return (Collection<edge_data>)this.edgesMap.get(node_id); 
+		if (this.edgesMap.get(node_id)==null) { return null; }
+		return this.edgesMap.get(node_id).values(); 
 		}
 
 	@Override
@@ -95,7 +98,7 @@ public class DGraph implements graph{
 		
 		if (this.nodesMap.get(key)==null) { return null; }
 		
-		node_data ans = new node(nodesMap.get(key));//for data-return
+		node_data ans = new node((node)nodesMap.get(key));//for data-return
 		ArrayList<Integer> toD = new ArrayList<Integer>();// to-Delete all empty HashMaps.
 		
 		//remove all edges going into key-node.
@@ -126,7 +129,7 @@ public class DGraph implements graph{
 	@Override
 	public edge_data removeEdge(int src, int dest) {
 		if (this.edgesMap.get(src).get(dest)==null) { return null; }
-		edge_data e = new edge(this.edgesMap.get(src).get(dest));
+		edge_data e = new edge((edge)this.edgesMap.get(src).get(dest));
 		
 		this.edgesMap.get(src).remove(dest);
 		edgesCounter--;
