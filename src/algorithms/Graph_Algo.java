@@ -150,8 +150,33 @@ public class Graph_Algo implements graph_algorithms{
 	*/
 	@Override
 	public boolean isConnected() {
+		for(int key: nodesMap.keySet()) {
+			for(HashMap<Integer, edge> key2 : edgesMap.values()) {
+				if(key2!=null) {
+					nodesMap.get(key).setTag(1);
+				}
+			}
+		}
 		
 		return false;
+	}
+	
+	public DGraph Transpose(DGraph x) {
+		DGraph ans = new DGraph();
+		ans.nodesMap=x.nodesMap;
+		ans.MC=x.MC;
+		
+		for(int key: x.edgesMap.keySet()) {
+			for(HashMap<Integer, edge> key2: x.edgesMap.values()) {
+				HashMap<Integer, edge> temp = new HashMap<>();
+				edge t = new edge(key2.get(key).getDest(),key2.get(key).getSrc(),key2.get(key).getWeight());
+				temp.put(key, t);
+				ans.edgesMap.put(key, temp);
+			}
+		}
+		return ans;
+		
+		
 	}
 
 	@Override
@@ -159,7 +184,7 @@ public class Graph_Algo implements graph_algorithms{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+		
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		List<node_data> ans = new LinkedList<node_data>();
@@ -181,8 +206,6 @@ public class Graph_Algo implements graph_algorithms{
 			}
 			//for every node, run though the edges and choose the most light edge, add it to the list.
 			}
-			
-		
 
 		return ans;
 	}
