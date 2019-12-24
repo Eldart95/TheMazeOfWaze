@@ -30,10 +30,7 @@ import utils.Point3D;
  */
 
 public class Graph_Algo implements graph_algorithms{
-	public HashMap<Integer, node_data> nodesMap = new HashMap<Integer, node_data>();
-	public HashMap<Integer, HashMap<Integer,edge_data>> edgesMap = new HashMap<Integer, HashMap<Integer,edge_data>>();
-	public int edgesCounter=0;
-	public int MC=0;
+	
 	private DGraph gr;
 	
 	
@@ -65,7 +62,7 @@ public class Graph_Algo implements graph_algorithms{
 						node n = new node();
 						Point3D p = new Point3D((int)(Math.random()+100),(int)(Math.random()+100));
 						n.setLocation(p);
-						nodesMap.put(n.getKey(), n);
+						this.gr.nodesMap.put(n.getKey(), n);
 						i++;
 					}
 					string1 = string1.substring(string1.charAt(2),string1.charAt(string1.length()));
@@ -80,7 +77,7 @@ public class Graph_Algo implements graph_algorithms{
 						edge n = new edge(a,b,Math.random()+100);
 						HashMap<Integer,edge_data> y = new HashMap<>();
 						y.put(b, n);
-						edgesMap.put(a, y);
+						this.gr.edgesMap.put(a, y);
 						
 					}
 					string1=string1.substring(i+4,string1.length());
@@ -103,14 +100,14 @@ public class Graph_Algo implements graph_algorithms{
 			PrintWriter write = new PrintWriter(new File(file_name));
 			StringBuilder sb = new StringBuilder();
 			sb.append("Nodes are: ");
-			for(int key:nodesMap.keySet())	{
-				node f = (node)this.nodesMap.get(key);		
+			for(int key:this.gr.nodesMap.keySet())	{
+				node f = (node)this.gr.nodesMap.get(key);		
 				sb.append(f.toString()+",");
 			}
 			sb.append("\n");
 			sb.append("Edges are: ");
-			for(int key:edgesMap.keySet()) {
-				for(HashMap<Integer, edge_data> edges:edgesMap.values()) {
+			for(int key:this.gr.edgesMap.keySet()) {
+				for(HashMap<Integer, edge_data> edges:this.gr.edgesMap.values()) {
 					edge f = (edge)edges.get(key);
 					sb.append("("+f.getSrc()+","+f.getDest()+")"+",");
 				}
@@ -156,21 +153,21 @@ public class Graph_Algo implements graph_algorithms{
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		List<node_data> ans = new LinkedList<node_data>();
-		for(int key:nodesMap.keySet())	{
-			this.nodesMap.get(key).setWeight(Double.MAX_VALUE);		
+		for(int key:this.gr.nodesMap.keySet())	{
+			this.gr.nodesMap.get(key).setWeight(Double.MAX_VALUE);		
 		}
 		
-		this.nodesMap.get(src).setWeight(0);
-		ans.add(this.nodesMap.get(src));
+		this.gr.nodesMap.get(src).setWeight(0);
+		ans.add(this.gr.nodesMap.get(src));
 		
-		for(int key:nodesMap.keySet())	{
-			if(this.nodesMap.get(key)==this.nodesMap.get(dest)) return ans;
-			if(this.nodesMap.get(key).getTag()==1) break;
-			for(int key2:edgesMap.keySet()) {
-				if(edgesMap.get(key).get(src).getSrc()==nodesMap.get(key).getKey()) {
-					nodesMap.get(key).setWeight(edgesMap.get(key2).get(key).getWeight());	
+		for(int key:this.gr.nodesMap.keySet())	{
+			if(this.gr.nodesMap.get(key)==this.gr.nodesMap.get(dest)) return ans;
+			if(this.gr.nodesMap.get(key).getTag()==1) break;
+			for(int key2:this.gr.edgesMap.keySet()) {
+				if(this.gr.edgesMap.get(key).get(src).getSrc()==this.gr.nodesMap.get(key).getKey()) {
+					this.gr.nodesMap.get(key).setWeight(this.gr.edgesMap.get(key2).get(key).getWeight());	
 				}
-				this.nodesMap.get(key).setTag(1);
+				this.gr.nodesMap.get(key).setTag(1);
 			}
 			//for every node, run though the edges and choose the most light edge, add it to the list.
 			}
