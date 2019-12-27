@@ -28,14 +28,6 @@ public class DGraph implements graph{
 		this.edgesMap.putAll(G.edgesMap);
 		this.MC=G.MC;
 		this.edgesCounter=G.edgesCounter;
-		
-	}
-	
-	public DGraph(HashMap<Integer, node_data> nodesMap,HashMap<Integer, HashMap<Integer,edge_data>> edgesMap,int EC,int MC) {
-		this.nodesMap = new HashMap<Integer, node_data>();
-		this.edgesMap = new HashMap<Integer, HashMap<Integer,edge_data>>();
-		this.edgesCounter=EC;
-		this.MC=MC;
 	}
 	
 	//Methods:

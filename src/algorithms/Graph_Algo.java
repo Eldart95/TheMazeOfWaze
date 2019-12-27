@@ -46,6 +46,8 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	private DGraph gr;
 	
 	
+	public Graph_Algo() {;}
+	
 	public Graph_Algo(DGraph g) {
 		this.gr=g;
 	}
@@ -114,7 +116,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				return false;
 			}
 		}
-		t(temp);
+		reverse(temp);
 		for(int key:temp.nodesMap.keySet()) {
 			temp.nodesMap.get(key).setTag(0);
 		}
@@ -144,7 +146,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 	}
 
-	public void t (graph g) {
+	public void reverse (graph g) {
 		Collection<node_data> n = gr.getV();
 		for(node_data nodesource:n) {
 			Collection<edge_data> e = gr.getE(nodesource.getKey());
