@@ -1,10 +1,8 @@
-
 package dataStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class DGraph implements graph{
 	
@@ -138,8 +136,5 @@ public class DGraph implements graph{
 
 	@Override
 	public int getMC() { return MC; }
-	
-
-	
+		
 }
-
