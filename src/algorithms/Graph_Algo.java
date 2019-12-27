@@ -106,7 +106,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			temp.nodesMap.get(key).setTag(0);
 		}
 		Collection<node_data> ns = temp.getV();
-		node_data x = gr.getNode(0);
+		node_data x = gr.getNode(0); //first node always keyd 0
 
 		DFS(x);
 		for (node_data node : ns) {
@@ -119,7 +119,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			temp.nodesMap.get(key).setTag(0);
 		}
 		Collection<node_data> nss = temp.getV();
-		node_data y = gr.getNode(0);
+		node_data y = gr.getNode(0); //first node always keyd 0
 
 		DFS(y);
 		for (node_data node1 : nss) {
