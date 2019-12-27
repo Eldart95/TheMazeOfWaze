@@ -297,38 +297,4 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		graph copy = new DGraph(this.gr);
 		return copy;
 	}
-	
-	public static void main(String[] args) {
-		node a = new node();
-		node b = new node();
-		node a1 = new node();
-//		node a2 = new node();
-//		node a3 = new node();
-//		node a4 = new node();
-		
-		DGraph d = new DGraph();
-		d.addNode(a);//0
-		d.addNode(b);//1
-		d.addNode(a1);//2
-//		d.addNode(a2);//3
-//		d.addNode(a3);//4
-//		d.addNode(a4);//5
-		d.connect(a.getKey(), b.getKey(), 5);
-		d.connect(b.getKey(), a.getKey(), 3);
-		d.connect(a.getKey(), a1.getKey(), 4);
-		d.connect(b.getKey(), a1.getKey(), 1);
-		d.connect(a1.getKey(), a.getKey(), 6);
-		d.connect(a1.getKey(), b.getKey(), 2);
-		
-		ArrayList<Integer> al = new ArrayList<Integer>();
-		al.add(0);
-		al.add(2);
-		al.add(1);
-		
-		Graph_Algo ga = new Graph_Algo(d);
-		
-		System.out.println(ga.TSP(al));
-
-	}
-
 }

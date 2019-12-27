@@ -223,9 +223,6 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 					gr_new.addNode(SSPdis.get(i));
 					gr_new.connect(SSPdis.get(i-1).getKey(), SSPdis.get(i).getKey(), this.gr.getEdge(SSPdis.get(i-1).getKey(), SSPdis.get(i).getKey()).getWeight());
 				}
-
-				//gr_new.addNode((node_data)new node(new Point3D(500,500),0)); tilll eldar pushhhhhhhhhh
-				//gr_new.addNode((node_data)new node(new Point3D(600,250),0));
 				this.initGUI(gr_new);
 			}	
 			catch (Exception e) {
