@@ -4,6 +4,7 @@ import algorithms.Graph_Algo;
 import dataStructure.DGraph;
 import dataStructure.graph;
 import dataStructure.node;
+import dataStructure.node_data;
 import utils.Point3D;
 
 public class Gui_Main {
@@ -26,7 +27,10 @@ public class Gui_Main {
 
 		GraphGui a = new GraphGui(g);
 		a.setVisible(true);
-
+	
+	
+		
 	}
+	                                                                                         
 
 }

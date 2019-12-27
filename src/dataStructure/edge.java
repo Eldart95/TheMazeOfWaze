@@ -20,7 +20,7 @@ public class edge implements edge_data {
 	 * for details only
 	 * @param o
 	 */
-	protected edge(edge o) {
+	public edge(edge o) {
 		this.src=o.src;
 		this.dest=o.dest;
 		this.tag=o.tag;
