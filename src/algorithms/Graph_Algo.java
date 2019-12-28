@@ -42,20 +42,27 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		if(g instanceof DGraph) { this.gr=(DGraph)g; }
 		else { throw new RuntimeException("Error initialaizing the graph"); }
 	}
+	/**
+	 * deSerialize
+	 */
 
 	@Override
 	public void init(String file_name) {
 		try {
-			 InputStream inStream = new FileInputStream(file_name);
-		     ObjectInputStream fileObjectIn = new ObjectInputStream(inStream);
-		     init((graph)fileObjectIn);
-		     fileObjectIn.close();
-		     inStream.close();
+			 ObjectInputStream in=new ObjectInputStream(new FileInputStream(file_name));
+			 graph ng = (graph) in.readObject(); 
+		     init(ng);
+		     
+		     
+		     in.close();
 		}
 		catch(Exception e) {
 			throw new RuntimeException("Can't load from file");
 		}
 	}
+	/**
+	 * Serialize 
+	 */
 
 	@Override
 	public void save(String file_name) {
@@ -71,19 +78,10 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}	
 	}
 	
-	/*For each vertex u of the graph, mark u as unvisited. Let L be empty.
-	For each vertex u of the graph do Visit(u), where Visit(u) is the recursive subroutine:
-	If u is unvisited then:
-	Mark u as visited.
-	For each out-neighbour v of u, do Visit(v).
-	Prepend u to L.
-	Otherwise do nothing.
-	For each element u of L in order, do Assign(u,u) where Assign(u,root) is the recursive subroutine:
-	If u has not been assigned to a component then:
-	Assign u as belonging to the component whose root is root.
-	For each in-neighbour v of u, do Assign(v,root).
-	Otherwise do nothing.
-	*/
+	/**
+	 * Check if the current graph is strongly connected.
+	 * return true if it is, else false.
+	 */
 	@Override
 	public boolean isConnected() { // WORKING
 		DGraph temp = (DGraph) this.copy();
@@ -114,6 +112,13 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 		return true;
 	}
+	/**
+	 * famous DFS algorithm.
+	 * used for traversing a graph.
+	 * for further reading:
+	 * https://en.wikipedia.org/wiki/Depth-first_search
+	 * @param node
+	 */
 	
 	private void DFS(node_data node) {
 		node.setTag(1);
@@ -126,6 +131,11 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			}
 		}
 	}
+	/**
+	 * reverse garph's edges
+	 * for each edge, replace dest with source.
+	 * @param g
+	 */
 
 	public void reverse (graph g) {
 		Collection<node_data> n = gr.getV();
@@ -150,6 +160,11 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			return -1;
 		}
 	}
+	/**
+	 * calculates shortest path between two selected nodes
+	 * if there isnt a path
+	 * returns double.MAX_VALUE
+	 */
 		
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
@@ -170,6 +185,13 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	
 
 	}
+	/**
+	 * the famous dijkstra algorithm for calculating the paths from a selected node 
+	 * to all other nodes in graph
+	 * for further reading:
+	 * https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+	 * @param src
+	 */
 	
 	public void dijakstra(int src) {
 		List<node_data>  unvisited = new LinkedList<node_data>();
@@ -209,6 +231,11 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		
 		
 	}
+	/**
+	 * creates a list of unvisited nodes
+	 * @param ar
+	 * @return list of unvisited nodes
+	 */
 	
 	public node_data unvistedmin(List<node_data> ar) {
 		double min = Double.MAX_VALUE;
@@ -222,6 +249,12 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		return mini;
 	}
 	
+	/**
+	 * method that check if there are nodes that weight infinity.
+	 * @param g
+	 * @return true if there are, else false.
+	 */
+	
 	public boolean Infinity(graph g) {
 		Collection<node_data> s = g.getV();
 		for(node_data n : s) {
@@ -231,7 +264,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	}
 
 	@Override
-	public List<node_data> TSP(List<Integer> targets) {
+	public List<node_data> TSP(List<Integer> targets) { // ~~ELDAR: NEED TO CHECK AGAIN
 		if(!isConnected()) throw new RuntimeException("the group is not strongly connected");
 		
 		if(gr.nodeSize()==targets.size()) return findPath(targets);
@@ -256,6 +289,12 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			return not.findPath(targets);
 	}
 	}
+	/**
+	 * method that finds a path exists between all the nodes that are given
+	 * helper for TSP
+	 * @param nodes
+	 * @return list of nodes that represents the path
+	 */
 	
 	public List<node_data> findPath(List<Integer> nodes) {
 		for(int key:gr.nodesMap.keySet()) {
@@ -277,6 +316,8 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		graph copy = new DGraph(this.gr);
 		return copy;
 	}
+	
+
 	
 	
 }
