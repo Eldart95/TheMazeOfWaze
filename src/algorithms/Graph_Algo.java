@@ -214,12 +214,12 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			current = unvistedmin(unvisited);	
 		}
 	}
+	
 	/**
 	 * Creates a list of unvisited nodes.
 	 * @param ar
 	 * @return list of unvisited nodes
 	 */
-
 	public node_data unvistedmin(List<node_data> ar) {
 		double min = Double.MAX_VALUE;
 		node_data mini=null;
@@ -237,7 +237,6 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	 * @param g
 	 * @return true if there are, else false.
 	 */
-
 	public boolean Infinity(graph g) {
 		Collection<node_data> s = g.getV();
 		for(node_data n : s) {
@@ -271,13 +270,13 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			return not.findPath(targets);
 		}
 	}
+	
 	/**
 	 * Method that finds a path exists between all the nodes that are given.
 	 * helper for TSP.
 	 * @param nodes
 	 * @return list of nodes that represents the path
 	 */
-
 	public List<node_data> findPath(List<Integer> nodes) {
 		for(int key:gr.nodesMap.keySet()) {
 			gr.nodesMap.get(key).setTag(0);
