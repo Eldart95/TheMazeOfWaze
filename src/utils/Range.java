@@ -46,6 +46,5 @@ public class Range {
 	
 	private void set_min(double _min) {
 		this._min = _min;
-	}
-	
+	}	
 }
