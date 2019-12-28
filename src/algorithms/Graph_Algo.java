@@ -53,7 +53,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		     inStream.close();
 		}
 		catch(Exception e) {
-			throw new RuntimeException("Cant load from file");
+			throw new RuntimeException("Can't load from file");
 		}
 	}
 
