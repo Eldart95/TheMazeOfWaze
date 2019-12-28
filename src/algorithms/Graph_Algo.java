@@ -173,16 +173,17 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-		if(!isConnected()) return null;
 		dijakstra(src);
 	
 		List<node_data> ans = new ArrayList<node_data>();
 		node_data current = gr.getNode(dest);
 		while(!current.getInfo().isEmpty())	{
 			ans.add(0, current);
+			//if(current.getInfo()=="Island") return null;
 			current = gr.getNode(Integer.parseInt(current.getInfo()));
 		}
 		ans.add(0, current);
+		
 		return ans;
 	
 
@@ -209,19 +210,25 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			
 			if(!unvisited.isEmpty()) unvisited.remove(current);
 			Collection<edge_data> e = gr.getE(current.getKey()); //this is all the edges starts current node
-			if(e==null) break;
+			if(e==null) {
+				break;
+				
+			}
 			for(edge_data edge:e) {
 				node_data destnode = gr.getNode(edge.getDest()); // this is the neighbour of the current node
 				if(current.getWeight()+edge.getWeight()<gr.nodesMap.get(destnode.getKey()).getWeight()) { //if this node weight + the edge starting
 				gr.nodesMap.get(destnode.getKey()).setWeight(edge.getWeight()+current.getWeight()); 
 				destnode.setInfo(""+current.getKey());																		// at this node weight is less than the dest node weight
 				}																							// than set
-	
+				
 			}
 			current = unvistedmin(unvisited);
 	
 			
 		}
+
+		
+		
 	}
 	public node_data unvistedmin(List<node_data> ar) {
 		double min = Double.MAX_VALUE;
@@ -246,6 +253,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
+		if(!isConnected()) throw new RuntimeException("the group is not strongly connected");
 		
 		if(gr.nodeSize()==targets.size()) return findPath(targets);
 		else {
@@ -266,7 +274,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 			
 			Graph_Algo not = new Graph_Algo(temp);
-			if(!not.isConnected()) throw new RuntimeException("the group is not strongly connected");
+			
 			return not.findPath(targets);
 	}
 		
@@ -296,5 +304,21 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	public graph copy() {
 		graph copy = new DGraph(this.gr);
 		return copy;
+	}
+	
+	public static void main(String[] args) {
+		node a = new node();
+		node b = new node();
+		
+		DGraph c = new DGraph();
+		c.addNode(a);
+		c.addNode(b);
+		
+		c.connect(a.getKey(), b.getKey(), 2);
+		c.connect(b.getKey(), a.getKey(), 4);
+		Graph_Algo d = new Graph_Algo(c);
+		
+		System.out.println(d.shortestPathDist(a.getKey(), b.getKey()));
+		
 	}
 }
