@@ -1,24 +1,14 @@
 package algorithms;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Reader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +19,6 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node;
 import dataStructure.node_data;
-import utils.Point3D;
 
 /**
  * This class represents the set of graph-theory algorithms
@@ -39,19 +28,14 @@ import utils.Point3D;
 
 public class Graph_Algo implements graph_algorithms, Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private DGraph gr;
-	
 	
 	public Graph_Algo() {;}
 	
 	public Graph_Algo(DGraph g) {
 		this.gr=g;
 	}
-	
 	
 	@Override
 	public void init(graph g) {
@@ -70,9 +54,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		catch(Exception e) {
 			throw new RuntimeException("Cant load from file");
 		}
-
 	}
-
 
 	@Override
 	public void save(String file_name) {
@@ -85,9 +67,9 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 		catch(Exception e) {
 			throw new RuntimeException("error saving to file");
-		}
-		
+		}	
 	}
+	
 	/*For each vertex u of the graph, mark u as unvisited. Let L be empty.
 	For each vertex u of the graph do Visit(u), where Visit(u) is the recursive subroutine:
 	If u is unvisited then:
@@ -129,11 +111,9 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				return false;
 			}
 		}
-
 		return true;
-		
-
 	}
+	
 	private void DFS(node_data node) {
 		node.setTag(1);
 		Collection<edge_data> t_c = this.gr.getE(node.getKey());
@@ -157,18 +137,17 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				gr.connect(edge.getDest(), edge.getSrc(), edge.getWeight());
 				gr.getEdge(edge.getDest(), edge.getSrc()).setTag(tag);
 			}
-		}
-		
-		
+		}	
 	}
-	
-
-	
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-		dijakstra(src);
-		return gr.getNode(dest).getWeight();
+		try {
+			dijakstra(src);
+			return gr.getNode(dest).getWeight();
+		} catch (NullPointerException e) {
+			return -1;
+		}
 	}
 		
 	@Override
@@ -183,11 +162,12 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			current = gr.getNode(Integer.parseInt(current.getInfo()));
 		}
 		ans.add(0, current);
+
 		
 		return ans;
 	
+	
 
-		
 	}
 	
 	public void dijakstra(int src) {
@@ -219,17 +199,16 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				if(current.getWeight()+edge.getWeight()<gr.nodesMap.get(destnode.getKey()).getWeight()) { //if this node weight + the edge starting
 				gr.nodesMap.get(destnode.getKey()).setWeight(edge.getWeight()+current.getWeight()); 
 				destnode.setInfo(""+current.getKey());																		// at this node weight is less than the dest node weight
-				}																							// than set
-				
-			}
-			current = unvistedmin(unvisited);
-	
-			
-		}
 
+			}
+			}
+			current = unvistedmin(unvisited);	
+		
+		}
 		
 		
 	}
+	
 	public node_data unvistedmin(List<node_data> ar) {
 		double min = Double.MAX_VALUE;
 		node_data mini=null;
@@ -241,7 +220,6 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 		return mini;
 	}
-
 	
 	public boolean Infinity(graph g) {
 		Collection<node_data> s = g.getV();
@@ -271,14 +249,11 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 					temp.connect(tem.getSrc(), tem.getDest(), tem.getWeight()); //add edges to new graph
 				}
 			}
-		}
-			
+		}		
 			Graph_Algo not = new Graph_Algo(temp);
 			
 			return not.findPath(targets);
 	}
-		
-	
 	}
 	
 	public List<node_data> findPath(List<Integer> nodes) {
@@ -293,12 +268,8 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				if(temp.getTag()==1 && !ans.contains(temp)) ans.add(temp);
 			}
 		}
-
 		return ans;
-	
-	
 	}
-
 
 	@Override
 	public graph copy() {
@@ -307,18 +278,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	}
 	
 	public static void main(String[] args) {
-		node a = new node();
-		node b = new node();
-		
-		DGraph c = new DGraph();
-		c.addNode(a);
-		c.addNode(b);
-		
-		c.connect(a.getKey(), b.getKey(), 2);
-		c.connect(b.getKey(), a.getKey(), 4);
-		Graph_Algo d = new Graph_Algo(c);
-		
-		System.out.println(d.shortestPathDist(a.getKey(), b.getKey()));
+
 		
 	}
 }

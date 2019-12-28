@@ -1,11 +1,9 @@
-
 package dataStructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class DGraph implements graph,Serializable{
 	
@@ -139,8 +137,5 @@ public class DGraph implements graph,Serializable{
 
 	@Override
 	public int getMC() { return MC; }
-	
-
-	
+		
 }
-

@@ -1,8 +1,5 @@
 package dataStructure;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import utils.Point3D;
 
 public class node implements node_data {

@@ -191,7 +191,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			}
 			break;
 
-		case "Save as png ": // done !
+		case "Save as png ":
 			try {
 				BufferedImage i = new BufferedImage(this.getWidth(), this.getHeight()+45, BufferedImage.TYPE_INT_RGB);
 				Graphics g = i.getGraphics();
@@ -203,15 +203,34 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			}
 			break;
 
-		case "Show Shortest Path  ": ///////////////////////////////////// done - gotta check///////////////
+		case "Show Shortest Path  ":
 			try {
-				System.out.println("Show Shortest Path ");
+				System.out.println("Show Shortest Path: ");
 				JFrame SSPin = new JFrame();
-				String SourceNodeSSP = JOptionPane.showInputDialog(SSPin,"Enter Source-Node:");
-				String DestNodeSSP = JOptionPane.showInputDialog(SSPin,"Enter Destination-Node:");
+				
+				int srcSSP=0;
+				int destSSP=0;
+				try {
+					String SourceNodeSSP = JOptionPane.showInputDialog(SSPin,"Enter Source-Node:");
+					String DestNodeSSP = JOptionPane.showInputDialog(SSPin,"Enter Destination-Node:");
 
-				int srcSSP = Integer.parseInt(SourceNodeSSP);
-				int destSSP = Integer.parseInt(DestNodeSSP);
+					srcSSP = Integer.parseInt(SourceNodeSSP);
+					destSSP = Integer.parseInt(DestNodeSSP);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(SSPin, "You've entered illegal node's-key");
+					System.out.println("You've entered illegal node's-key");
+					break;
+				}
+				if (this.gr.getNode(srcSSP)==null) {
+					JOptionPane.showMessageDialog(SSPin, "You've entered illegal node's-key");
+					System.out.println("You've entered illegal node's-key");
+					break;
+				}
+				if (this.gr.getNode(destSSP)==null) {
+					JOptionPane.showMessageDialog(SSPin, "You've entered illegal node's-key");
+					System.out.println("You've entered illegal node's-key");
+					break;
+				}
 
 				Graph_Algo newGSSP = new Graph_Algo();
 				newGSSP.init(gr);
@@ -230,23 +249,41 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			}
 			break;
 
-		case "Shortest Path Distance": ////////////////////////////////////////// done - gotta check //////////////
+		case "Shortest Path Distance":
 			try
 			{
 				JFrame SPDinput = new JFrame();
-				String SourceNodeSPD = JOptionPane.showInputDialog(SPDinput,"Enter Source-Node:");
-				String DestNodeSPD = JOptionPane.showInputDialog(SPDinput,"Enter Destination-Node:");
-
-				int srcSPD = Integer.parseInt(SourceNodeSPD);
-				int destSPD = Integer.parseInt(DestNodeSPD);
-
-				Graph_Algo newg = new Graph_Algo();
 				
-				newg.init(this.gr);
-				double x = newg.shortestPathDist(srcSPD, destSPD);
-				JOptionPane.showMessageDialog(SPDinput, "The Shortest Path Distance is: " + x);
+				int srcSPD=0;
+				int destSPD=0;
+				try {
+					String SourceNodeSPD = JOptionPane.showInputDialog(SPDinput,"Enter Source-Node:");
+					String DestNodeSPD = JOptionPane.showInputDialog(SPDinput,"Enter Destination-Node:");
 
-				System.out.println("Shortest Path Distance is:" + x);
+					srcSPD = Integer.parseInt(SourceNodeSPD);
+					destSPD = Integer.parseInt(DestNodeSPD);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(SPDinput, "You've entered illegal node's-key");
+					System.out.println("You've entered illegal node's-key");
+					break;
+				}
+				
+				Graph_Algo newg = new Graph_Algo();			
+				newg.init(this.gr);
+			
+				double x = newg.shortestPathDist(srcSPD, destSPD);
+				if (x==-1) {
+					JOptionPane.showMessageDialog(SPDinput, "You've entered illegal node's-key");
+					System.out.println("You've entered illegal node's-key");
+				}
+				else if(x==Double.MAX_VALUE) {
+					JOptionPane.showMessageDialog(SPDinput, "There is no such path (Distance = Infinity).");
+					System.out.println("There is no such path (Distance = Infinity).");
+				}
+				else {
+					JOptionPane.showMessageDialog(SPDinput, "The Shortest Path Distance is: " + x);
+					System.out.println("Shortest Path Distance is:" + x);
+				}
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -255,33 +292,69 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 
 		case "The SalesMan Problem": 
 			JFrame TSPinput = new JFrame();
+			
 			String SourceNodeTSP = JOptionPane.showInputDialog(TSPinput,"How many nodes ?");
-			int manyTSP = Integer.parseInt(SourceNodeTSP);
+			int manyTSP=1;
+			try {
+				manyTSP = Integer.parseInt(SourceNodeTSP);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(TSPinput, "Ilegal number of nodes.");
+				break;
+			}
+			if (manyTSP<1 || manyTSP>this.gr.nodeSize()) {
+				JOptionPane.showMessageDialog(TSPinput, "Ilegal number of nodes.");
+				break;
+			}
+			
+			int cmon=0;
+			if (manyTSP==1) {
+				SourceNodeTSP = JOptionPane.showInputDialog(TSPinput,"Enter node-key");
+				try {
+					cmon = Integer.parseInt(SourceNodeTSP);
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(TSPinput, "Ilegal key.");
+					break;
+				}
+				graph gr_new=new DGraph();
+				
+				gr_new.addNode(this.gr.getNode(cmon));
+				this.initGUI(gr_new);	
+				break;
+			}
+			
 			List<Integer> TSPnodes = new ArrayList<Integer>();
+			int TSPkey=0;
 			for (int i=0; i<manyTSP; i++) {
-				SourceNodeTSP = JOptionPane.showInputDialog(TSPinput,"Enter node-key "+(i+1)+"/"+manyTSP+": "+"\n"
-			+"so far you entered: \n");
-				int TSPkey = Integer.parseInt(SourceNodeTSP);
+				SourceNodeTSP = JOptionPane.showInputDialog(TSPinput,"Enter node-key "+(i+1)+"/"+manyTSP);
+				try {
+					TSPkey = Integer.parseInt(SourceNodeTSP);
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(TSPinput, "Ilegal key.");
+					break;
+				}
+				if(this.gr.getNode(TSPkey)==null) {
+					JOptionPane.showMessageDialog(TSPinput, "Ilegal key.");
+					break;
+				}	
 				TSPnodes.add(TSPkey);
 			}
 			
 			Graph_Algo newGTSP = new Graph_Algo();
 			newGTSP.init(gr);
+			
 			List<node_data> TSP = newGTSP.TSP(TSPnodes);
 			graph gr_new=new DGraph();
+			
 			gr_new.addNode(TSP.get(0));
 			for (int i=1; i<TSP.size(); i++) {
 				gr_new.addNode(TSP.get(i));
 				gr_new.connect(TSP.get(i-1).getKey(), TSP.get(i).getKey(), this.gr.getEdge(TSP.get(i-1).getKey(), TSP.get(i).getKey()).getWeight());
 			}
-
-			//gr_new.addNode((node_data)new node(new Point3D(100,500),0)); //TILL ELDAR PUSHHHHH
-			//gr_new.addNode((node_data)new node(new Point3D(600,100),0));
-			this.initGUI(gr_new);
 			
+			this.initGUI(gr_new);	
 			break;
 
-		case "Is it Conncected ?": ////////////////////////////////////////// done - gotta check //////////////
+		case "Is it Conncected ?":
 			JFrame isIt = new JFrame();			
 			Graph_Algo isCga = new Graph_Algo();
 			isCga.init(this.gr);

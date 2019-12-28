@@ -1,21 +1,15 @@
 package Testing;
 
 import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import dataStructure.DGraph;
 import dataStructure.graph;
 import dataStructure.node;
-import dataStructure.node_data;
 import utils.Point3D;
 
 class DGraphJTest {
-
-	//@BeforeEach
 	
 	@Test
 	void testAddNode() {
@@ -98,5 +92,4 @@ class DGraphJTest {
 		if (g.getEdge(n2.getKey(), n3.getKey()) != null) { fail();}
 		if (g.getEdge(n1.getKey(), n2.getKey()) == null) { fail();}
 	}
-
 }

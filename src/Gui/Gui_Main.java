@@ -1,6 +1,5 @@
 package Gui;
 
-import algorithms.Graph_Algo;
 import dataStructure.DGraph;
 import dataStructure.graph;
 import dataStructure.node;
@@ -45,7 +44,6 @@ public class Gui_Main {
 		g.connect(n7.getKey(), n4.getKey(), 42);
 		g.connect(n1.getKey(), n5.getKey(), 23);
 		g.connect(n6.getKey(), n2.getKey(), 4.20);
-		g.connect(n8.getKey(), n6.getKey(), 3);
 		
 		GraphGui a = new GraphGui(g);
 		a.setVisible(true);
