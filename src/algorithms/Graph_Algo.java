@@ -48,6 +48,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		try {
 			 InputStream inStream = new FileInputStream(file_name);
 		     ObjectInputStream fileObjectIn = new ObjectInputStream(inStream);
+		     init((graph)fileObjectIn);
 		     fileObjectIn.close();
 		     inStream.close();
 		}
@@ -265,7 +266,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			DFS(gr.getNode(nodes.get(i)));
 			Collection<node_data> n = gr.getV();
 			for(node_data temp:n) {
-				if(temp.getTag()==1 && !ans.contains(temp)) ans.add(temp);
+				if(temp.getTag()==1) ans.add(temp);
 			}
 		}
 		return ans;
