@@ -13,7 +13,6 @@ import dataStructure.node_data;
  * 3. isConnected();
  * 5. double shortestPathDist(int src, int dest);
  * 6. List<Node> shortestPath(int src, int dest);
- *
  * @author YosefTwito and EldarTakach
  */
 
