@@ -277,8 +277,5 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		return copy;
 	}
 	
-	public static void main(String[] args) {
-
-		
-	}
+	
 }
