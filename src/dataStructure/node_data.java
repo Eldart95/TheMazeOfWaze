@@ -7,7 +7,6 @@ import utils.Point3D;
  * node (vertex) in a (directional) weighted graph.
  * @author YosefTwito and EldarTakach
  */
-
 public interface node_data {
 
 	/**

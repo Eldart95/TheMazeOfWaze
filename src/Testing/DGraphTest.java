@@ -9,7 +9,7 @@ import dataStructure.graph;
 import dataStructure.node;
 import utils.Point3D;
 
-class DGraphJTest {
+class DGraphTest {
 	
 	@Test
 	void testAddNode() {

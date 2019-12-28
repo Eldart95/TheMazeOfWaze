@@ -8,7 +8,6 @@ import java.util.Collection;
  * The implementation should be based on an efficient compact representation (should NOT be based on a n*n matrix).
  * @author YosefTwito and EldarTakach
  */
-
 public interface graph {
 
 	/**

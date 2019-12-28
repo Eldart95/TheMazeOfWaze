@@ -6,9 +6,6 @@ import utils.Point3D;
 
 public class node implements node_data,Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public static int keyMaker=0;

@@ -7,9 +7,6 @@ import java.util.HashMap;
 
 public class DGraph implements graph,Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	//DGraph Parameters:
 	public HashMap<Integer, node_data> nodesMap = new HashMap<Integer, node_data>();

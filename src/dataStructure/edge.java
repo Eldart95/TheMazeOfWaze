@@ -4,11 +4,9 @@ import java.io.Serializable;
 
 public class edge implements edge_data,Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	//Edge parameters:
+	
+	//Edge's parameters:
 	private int src, dest, tag;
 	private double weight;
 	private String info;

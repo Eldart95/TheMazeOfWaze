@@ -5,7 +5,6 @@ package dataStructure;
  * directional edge(src,dest) in a (directional) weighted graph.
  * @author YosefTwito and EldarTakach
  */
-
 public interface edge_data {
 
 	/**
