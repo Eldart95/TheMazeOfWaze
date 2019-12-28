@@ -111,16 +111,16 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 
 		Menu alg  = new Menu("Algorithms ");
 		menuBar.add(alg);
-		
+
 		MenuItem item1 = new MenuItem("Init Original Graph");
 		item1.addActionListener(this);
 		file.add(item1);
 
-		MenuItem item2 = new MenuItem("Init From textFile ");
+		MenuItem item2 = new MenuItem("Init from File ");
 		item2.addActionListener(this);
 		file.add(item2);
 
-		MenuItem item3 = new MenuItem("Save as textFile ");
+		MenuItem item3 = new MenuItem("Save as File ");
 		item3.addActionListener(this);
 		file.add(item3);
 
@@ -128,21 +128,21 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 		item4.addActionListener(this);
 		file.add(item4);
 
-		MenuItem item5 = new MenuItem("Show Shortest Path  ");
-		item5.addActionListener(this);
-		alg.add(item5);
+		MenuItem item7 = new MenuItem("Is it Conncected ?"  );
+		item7.addActionListener(this);
+		alg.add(item7);
 
 		MenuItem item12 = new MenuItem("Shortest Path Distance");
 		item12.addActionListener(this);
 		alg.add(item12);
 
+		MenuItem item5 = new MenuItem("Show Shortest Path  ");
+		item5.addActionListener(this);
+		alg.add(item5);
+
 		MenuItem item6 = new MenuItem("The SalesMan Problem");
 		item6.addActionListener(this);
 		alg.add(item6);
-
-		MenuItem item7 = new MenuItem("Is it Conncected ?"  );
-		item7.addActionListener(this);
-		alg.add(item7);
 
 	}
 
@@ -151,53 +151,63 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 		String str = Command.getActionCommand();		
 		Graph_Algo t=new Graph_Algo();
 		JFileChooser j;
-		FileNameExtensionFilter filter;
 
 		switch(str) {
-		
+
 		case "Init Original Graph": 
 			initGUI(this.original);
 			break;
 
-		case "Init From textFile ": ////////////////////////////////////// gotta check /////////////////
-			System.out.println("Init From textFile: ");
+		case "Init from File ":
 			t=new Graph_Algo();
 
 			j = new JFileChooser(FileSystemView.getFileSystemView());
-			j.setDialogTitle("Init graph out of text file.."); 
-			filter = new FileNameExtensionFilter(" .txt","txt");
-			j.setFileFilter(filter);
+			j.setDialogTitle("Init graph out of file.."); 
 
-			int returnVal = j.showOpenDialog(null);
-			if(returnVal == JFileChooser.APPROVE_OPTION) {
-				System.out.println("You chose to open this file: " + j.getSelectedFile().getName());
-				t.init(j.getSelectedFile().getName());
+			int userSelection = j.showOpenDialog(null);
+			if(userSelection == JFileChooser.APPROVE_OPTION) {
+				System.out.println("You chose to open this file - " + j.getSelectedFile().getName());
+				t.init(j.getSelectedFile().getAbsolutePath());
+				graph gr_new=t.copy();
+				initGUI(gr_new);	
 			}			
 			break;
 
-		case "Save as textFile ": ////////////////////////////////////// gotta check /////////////////
-			System.out.println("Save as textFile: ");
+		case "Save as File ":
 			t=new Graph_Algo((DGraph)this.gr);		
 
 			j = new JFileChooser(FileSystemView.getFileSystemView());
 			j.setDialogTitle("Save graph to file..");
 
-			int userSelection = j.showSaveDialog(null);
-			if (userSelection == JFileChooser.APPROVE_OPTION) {
-				System.out.println("Save as file: " + j.getSelectedFile().getAbsolutePath());
-				t.save(j.getSelectedFile().getName());
+			int userSelection1 = j.showSaveDialog(null);
+			if (userSelection1 == JFileChooser.APPROVE_OPTION) {
+				System.out.println("Saved as file - " + j.getSelectedFile().getAbsolutePath());
+				t.save(j.getSelectedFile().getAbsolutePath());
 			}
 			break;
 
 		case "Save as png ":
-			try {
-				BufferedImage i = new BufferedImage(this.getWidth(), this.getHeight()+45, BufferedImage.TYPE_INT_RGB);
-				Graphics g = i.getGraphics();
-				paint(g);
-				ImageIO.write(i, "png", new File("SavedGraph.png"));
-				System.out.println("Saved as png: SavedGraph.png");
-			} catch (IOException e) {
-				e.printStackTrace();
+			j = new JFileChooser(FileSystemView.getFileSystemView());
+			j.setDialogTitle("Save as png..");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(" .png","png");
+			j.setFileFilter(filter);
+
+			int userSelection2 = j.showSaveDialog(null);
+			if (userSelection2 == JFileChooser.APPROVE_OPTION) {
+				try {
+					BufferedImage i = new BufferedImage(this.getWidth(), this.getHeight()+45, BufferedImage.TYPE_INT_RGB);
+					Graphics g = i.getGraphics();
+					paint(g);
+					if (j.getSelectedFile().getName().endsWith(".png")) {
+						ImageIO.write(i, "png", new File(j.getSelectedFile().getAbsolutePath()));
+					}
+					else {
+						ImageIO.write(i, "png", new File(j.getSelectedFile().getAbsolutePath()+".png"));
+					}
+					System.out.println("Saved as png - " + j.getSelectedFile().getAbsolutePath());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			break;
 
@@ -205,7 +215,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			try {
 				System.out.println("Show Shortest Path: ");
 				JFrame SSPin = new JFrame();
-				
+
 				int srcSSP=0;
 				int destSSP=0;
 				try {
@@ -251,7 +261,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			try
 			{
 				JFrame SPDinput = new JFrame();
-				
+
 				int srcSPD=0;
 				int destSPD=0;
 				try {
@@ -265,16 +275,16 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 					System.out.println("You've entered illegal node's-key");
 					break;
 				}
-				
+
 				Graph_Algo newg = new Graph_Algo();			
 				newg.init(this.gr);
-			
+
 				double x = newg.shortestPathDist(srcSPD, destSPD);
 				if (x==-1) {
 					JOptionPane.showMessageDialog(SPDinput, "You've entered illegal node's-key");
 					System.out.println("You've entered illegal node's-key");
 				}
-		 		else if(x==Double.MAX_VALUE) {
+				else if(x==Double.MAX_VALUE) {
 					JOptionPane.showMessageDialog(SPDinput, "There is no such path (Distance = Infinity).");
 					System.out.println("There is no such path (Distance = Infinity).");
 				}
@@ -290,7 +300,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 
 		case "The SalesMan Problem": 
 			JFrame TSPinput = new JFrame();
-			
+
 			String SourceNodeTSP = JOptionPane.showInputDialog(TSPinput,"How many nodes ?");
 			int manyTSP=1;
 			try {
@@ -303,7 +313,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 				JOptionPane.showMessageDialog(TSPinput, "Ilegal number of nodes.");
 				break;
 			}
-			
+
 			int cmon=0;
 			if (manyTSP==1) {
 				SourceNodeTSP = JOptionPane.showInputDialog(TSPinput,"Enter node-key");
@@ -314,12 +324,12 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 					break;
 				}
 				graph gr_new=new DGraph();
-				
+
 				gr_new.addNode(this.gr.getNode(cmon));
 				this.initGUI(gr_new);	
 				break;
 			}
-			
+
 			List<Integer> TSPnodes = new ArrayList<Integer>();
 			int TSPkey=0;
 			for (int i=0; i<manyTSP; i++) {
@@ -336,19 +346,19 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 				}	
 				TSPnodes.add(TSPkey);
 			}
-			
+
 			Graph_Algo newGTSP = new Graph_Algo();
 			newGTSP.init(gr);
-			
+
 			List<node_data> TSP = newGTSP.TSP(TSPnodes);
 			graph gr_new=new DGraph();
-			
+
 			gr_new.addNode(TSP.get(0));
 			for (int i=1; i<TSP.size(); i++) {
 				gr_new.addNode(TSP.get(i));
 				gr_new.connect(TSP.get(i-1).getKey(), TSP.get(i).getKey(), this.gr.getEdge(TSP.get(i-1).getKey(), TSP.get(i).getKey()).getWeight());
 			}
-			
+
 			this.initGUI(gr_new);	
 			break;
 
@@ -359,7 +369,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			if (isCga.isConnected()) { 
 				System.out.println("The graph is Connected !");
 				JOptionPane.showMessageDialog(isIt, "The graph is Connected !");
-				}
+			}
 			else { 
 				System.out.println("The graph is not Connected !");
 				JOptionPane.showMessageDialog(isIt, "The graph is not Connected !");				
