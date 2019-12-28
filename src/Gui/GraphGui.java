@@ -171,23 +171,21 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			int returnVal = j.showOpenDialog(null);
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
 				System.out.println("You chose to open this file: " + j.getSelectedFile().getName());
-				t.init(j.getSelectedFile().getAbsolutePath());
+				t.init(j.getSelectedFile().getName());
 			}			
 			break;
 
 		case "Save as textFile ": ////////////////////////////////////// gotta check /////////////////
 			System.out.println("Save as textFile: ");
-			t=new Graph_Algo();
+			t=new Graph_Algo((DGraph)this.gr);		
 
 			j = new JFileChooser(FileSystemView.getFileSystemView());
-			j.setDialogTitle("Save graph to text file.."); 
-			filter = new FileNameExtensionFilter(" .txt","txt");
-			j.setFileFilter(filter);
+			j.setDialogTitle("Save graph to file..");
 
 			int userSelection = j.showSaveDialog(null);
 			if (userSelection == JFileChooser.APPROVE_OPTION) {
 				System.out.println("Save as file: " + j.getSelectedFile().getAbsolutePath());
-				t.save(j.getSelectedFile().getAbsolutePath());
+				t.save(j.getSelectedFile().getName());
 			}
 			break;
 
@@ -276,7 +274,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 					JOptionPane.showMessageDialog(SPDinput, "You've entered illegal node's-key");
 					System.out.println("You've entered illegal node's-key");
 				}
-				else if(x==Double.MAX_VALUE) {
+		 		else if(x==Double.MAX_VALUE) {
 					JOptionPane.showMessageDialog(SPDinput, "There is no such path (Distance = Infinity).");
 					System.out.println("There is no such path (Distance = Infinity).");
 				}
