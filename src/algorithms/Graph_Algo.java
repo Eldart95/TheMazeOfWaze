@@ -66,7 +66,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
         outStream.close();
 		}
 		catch(Exception e) {
-			throw new RuntimeException("error saving to file");
+			throw new RuntimeException("Error saving to file");
 		}	
 	}
 	
