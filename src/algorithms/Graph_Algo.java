@@ -8,8 +8,10 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 
 import dataStructure.*;
 
@@ -118,8 +120,8 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		Collection<edge_data> t_c = this.gr.getE(node.getKey());
 		if (t_c != null) {
 			for (edge_data edge : t_c) {
-				if (this.gr.getNode(edge.getDest()) != null && this.gr.getE(edge.getDest()) != null && this.gr.getNode(edge.getDest()).getTag() == 0) {
-					DFS(this.gr.getNode(edge.getDest()));
+				if (gr.getNode(edge.getDest()) != null && gr.getE(edge.getDest()) != null && gr.getNode(edge.getDest()).getTag() == 0) {
+					DFS(gr.getNode(edge.getDest()));
 				}
 			}
 		}
@@ -247,54 +249,66 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) { // ~~ELDAR: NEED TO CHECK AGAIN
-		if(!isConnected()) throw new RuntimeException("the group is not strongly connected");
-
-		if(gr.nodeSize()==targets.size()) return findPath(targets);
-		else {
-			DGraph temp = new DGraph();
-			for(int i=0;i<targets.size();i++) {
-				temp.addNode(gr.getNode(targets.get(i))); // add nodes to new graph
-
-				Collection<node_data> n = temp.getV();
-
-				for(node_data nd:n) {
-					Collection<edge_data> e = temp.getE(nd.getKey());
-					if(e==null) continue;
-					for(edge_data t:e) {
-						edge tem = new edge((edge) t);
-						temp.connect(tem.getSrc(), tem.getDest(), tem.getWeight()); //add edges to new graph
-					}
-				}
-			}		
-			Graph_Algo not = new Graph_Algo(temp);		
-			return not.findPath(targets);
-		}
-	}
-	
-	/**
-	 * Method that finds a path exists between all the nodes that are given.
-	 * helper for TSP.
-	 * @param nodes
-	 * @return list of nodes that represents the path
-	 */
-	public List<node_data> findPath(List<Integer> nodes) {
-		for(int key:gr.nodesMap.keySet()) {
-			gr.nodesMap.get(key).setTag(0);
-		}
+		if(!isConnected()) return null;
+		if(targets.size()==0) throw new RuntimeException("Empty list of targets");
 		ArrayList<node_data> ans = new ArrayList<node_data>();
-		for(int i=0;i<nodes.size();i++) {
-			DFS(gr.getNode(nodes.get(i)));
-			Collection<node_data> n = gr.getV();
-			for(node_data temp:n) {
-				if(temp.getTag()==1) ans.add(temp);
+		if(targets.size()==1) {
+			ans.add(gr.getNode(targets.get(0)));
+			return ans;
+		}
+		
+		Collection<node_data> all_nodes = gr.getV(); //collection of all nodes in the graph
+		ArrayList<node_data> target_nodes = new ArrayList<node_data>();//array list that will contain target nodes ONLY
+		for(node_data nd:all_nodes) {
+			if(targets.contains(nd.getKey())) {
+				target_nodes.add(nd);
 			}
 		}
-		return ans;
+		boolean flag = false;
+		for(int i=1;i<2020;i++) {
+			for(int j=1;j<target_nodes.size();j++) {
+				flag=isTherePath(target_nodes.get(j-1),target_nodes.get(j));
+				
+			
+			}
+			if(flag==true) return target_nodes;
+			shuffle(target_nodes);
+		}
+		
+		return target_nodes;
+		
+
+		
+	}
+
+	private void shuffle(ArrayList<node_data> target_nodes) {
+		Collections.shuffle(target_nodes);
+		
+	}
+
+	private boolean isTherePath(node_data node_data, node_data node_data2) {
+		if(shortestPath(node_data.getKey(), node_data2.getKey())!=null) return true;
+		return false;
 	}
 
 	@Override
 	public graph copy() {
 		graph copy = new DGraph(this.gr);
 		return copy;
+	}
+	
+	public static void main(String[] args) {
+		node a = new node();
+		node b = new node();
+		
+		DGraph t = new DGraph();
+		t.addNode(a);
+		t.addNode(b);
+		
+		Graph_Algo temp = new Graph_Algo(t);
+		ArrayList<Integer> ar = new ArrayList<Integer>();
+		ar.add(0);
+		
+		temp.TSP(ar);
 	}
 }
