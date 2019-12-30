@@ -8,7 +8,7 @@ import utils.Point3D;
 public class Gui_Main {
 
 	public static void main(String[] args) {
-		
+
 		Point3D p1 = new Point3D(99, 95);
 		Point3D p2 = new Point3D(203, 96);
 		Point3D p3 = new Point3D(154, 152);
@@ -25,7 +25,7 @@ public class Gui_Main {
 		node n6 = new node(p6, 0);
 		node n7 = new node(p7, 0);
 		node n8 = new node(p8, 0);
-		
+
 		graph g = new DGraph();
 		g.addNode(n1);//0
 		g.addNode(n2);//1
@@ -44,7 +44,7 @@ public class Gui_Main {
 		g.connect(n5.getKey(), n7.getKey(), 42);
 		g.connect(n1.getKey(), n5.getKey(), 23);
 		g.connect(n6.getKey(), n2.getKey(), 4.20);
-		
+
 		GraphGui a = new GraphGui(g);
 		a.setVisible(true);
 
