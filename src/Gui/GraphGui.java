@@ -246,7 +246,9 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 				List<node_data> SSPdis = newGSSP.shortestPath(srcSSP, destSSP);
 				graph gr_new=new DGraph();
 				gr_new.addNode(SSPdis.get(0));
+				System.out.print(SSPdis.get(0).getKey());
 				for (int i=1; i<SSPdis.size(); i++) {
+					System.out.print(" --> "+SSPdis.get(i).getKey());
 					gr_new.addNode(SSPdis.get(i));
 					gr_new.connect(SSPdis.get(i-1).getKey(), SSPdis.get(i).getKey(), this.gr.getEdge(SSPdis.get(i-1).getKey(), SSPdis.get(i).getKey()).getWeight());
 				}
@@ -354,7 +356,9 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			graph gr_new=new DGraph();
 
 			gr_new.addNode(TSP.get(0));
+			System.out.print(TSP.get(0).getKey());
 			for (int i=1; i<TSP.size(); i++) {
+				System.out.print(" --> "+TSP.get(i).getKey());
 				gr_new.addNode(TSP.get(i));
 				gr_new.connect(TSP.get(i-1).getKey(), TSP.get(i).getKey(), this.gr.getEdge(TSP.get(i-1).getKey(), TSP.get(i).getKey()).getWeight());
 			}
