@@ -138,5 +138,9 @@ public class DGraph implements graph,Serializable{
 
 	@Override
 	public int getMC() { return MC; }
+	
+	public static void main(String[] args) {
+		System.out.println("x");
+	}
 		
 }

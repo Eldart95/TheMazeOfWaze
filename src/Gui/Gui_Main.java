@@ -27,21 +27,21 @@ public class Gui_Main {
 		node n8 = new node(p8, 0);
 		
 		graph g = new DGraph();
-		g.addNode(n1);
-		g.addNode(n2);
-		g.addNode(n3);
-		g.addNode(n4);
-		g.addNode(n5);
-		g.addNode(n6);
-		g.addNode(n7);
-		g.addNode(n8);
+		g.addNode(n1);//0
+		g.addNode(n2);//1
+		g.addNode(n3);//2
+		g.addNode(n4);//3
+		g.addNode(n5);//4
+		g.addNode(n6);//5
+		g.addNode(n7);//6
+		g.addNode(n8);//7
 		g.connect(n1.getKey(), n2.getKey(), 7);
 		g.connect(n2.getKey(), n1.getKey(), 2.77);
 		g.connect(n2.getKey(), n3.getKey(), 4.5);
 		g.connect(n5.getKey(), n3.getKey(), 10);
 		g.connect(n6.getKey(), n4.getKey(), 4.11);
-		g.connect(n1.getKey(), n5.getKey(), 3.55);
-		g.connect(n7.getKey(), n4.getKey(), 42);
+		g.connect(n3.getKey(), n5.getKey(), 3.55);
+		g.connect(n5.getKey(), n7.getKey(), 42);
 		g.connect(n1.getKey(), n5.getKey(), 23);
 		g.connect(n6.getKey(), n2.getKey(), 4.20);
 		
