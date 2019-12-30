@@ -1,8 +1,13 @@
 package Gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import algorithms.Graph_Algo;
 import dataStructure.DGraph;
 import dataStructure.graph;
 import dataStructure.node;
+import dataStructure.node_data;
 import utils.Point3D;
 
 public class Gui_Main {
@@ -38,16 +43,23 @@ public class Gui_Main {
 		g.connect(n1.getKey(), n2.getKey(), 7);
 		g.connect(n2.getKey(), n1.getKey(), 2.77);
 		g.connect(n2.getKey(), n3.getKey(), 4.5);
-		g.connect(n5.getKey(), n3.getKey(), 10);
-		g.connect(n6.getKey(), n4.getKey(), 4.11);
+		//g.connect(n5.getKey(), n3.getKey(), 10);
+		//g.connect(n6.getKey(), n4.getKey(), 4.11);
 		g.connect(n1.getKey(), n5.getKey(), 3.55);
 		g.connect(n7.getKey(), n4.getKey(), 42);
-		g.connect(n1.getKey(), n5.getKey(), 23);
+	//	g.connect(n1.getKey(), n5.getKey(), 23);
 		g.connect(n6.getKey(), n2.getKey(), 4.20);
 		
 		GraphGui a = new GraphGui(g);
 		a.setVisible(true);
-
+		
+	/*	Graph_Algo t = new Graph_Algo();
+		t.init(g);
+		List<node_data> b = t.shortestPath(0,2);
+		for (int i=0; i<b.size(); i++) {
+			System.out.println(b.get(i).getKey());
+		}
+		System.out.println(1);*/
+	
 	}
-
 }
