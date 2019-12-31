@@ -166,13 +166,13 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		dijakstra(src);
-
+		
 		List<node_data> ans = new ArrayList<node_data>();
 		node_data current = gr.getNode(dest);
-		while(!current.getInfo().isEmpty())	{
+		while(!current.getInfo().isEmpty()||current.getKey()==gr.getNode(src).getKey())	{
 			ans.add(0, current);
-			
 			current = gr.getNode(Integer.parseInt(current.getInfo()));
+			if(current.getKey()==gr.getNode(src).getKey()) break;
 		}
 		ans.add(0, current);
 		return ans;
@@ -263,10 +263,12 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) { // ~~ELDAR: NEED TO CHECK AGAIN
-		if(!isConnected()) return null;
+		//if(!isConnected()) return null;
+		//System.out.println(targets.size());
 		if(targets.size()==0) throw new RuntimeException("Empty list of targets");
 		ArrayList<node_data> ans = new ArrayList<node_data>();
 		if(targets.size()==1) {
+		//	System.out.println("x");
 			ans.add(gr.getNode(targets.get(0)));
 			return ans;
 		}
@@ -342,14 +344,19 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		g.connect(n2.getKey(), n3.getKey(), 4.5);
 		g.connect(n5.getKey(), n3.getKey(), 10);
 		g.connect(n6.getKey(), n4.getKey(), 4.11);
-		g.connect(n1.getKey(), n5.getKey(), 3.55);
-		g.connect(n7.getKey(), n4.getKey(), 42);
+		g.connect(n3.getKey(), n5.getKey(), 3.55);
+		g.connect(n5.getKey(), n7.getKey(), 42);
 		g.connect(n1.getKey(), n5.getKey(), 23);
 		g.connect(n6.getKey(), n2.getKey(), 4.20);
 		
 		Graph_Algo h = new Graph_Algo(g);
+		System.out.println(h.shortestPathDist(n2.getKey(), n1.getKey()));
+		List<node_data> nd = new ArrayList<node_data>();
+		nd = h.shortestPath(n1.getKey(), n2.getKey());
+		System.out.println(nd.get(0).getKey());
+		System.out.println(nd.get(1).getKey());
 		
-		System.out.println(h.shortestPathDist(n6.getKey(), n1.getKey()));
+		
 		
 	}
 

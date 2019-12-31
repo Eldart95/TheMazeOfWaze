@@ -245,11 +245,20 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 
 				List<node_data> SSPdis = newGSSP.shortestPath(srcSSP, destSSP);
 				graph gr_new=new DGraph();
+				if(SSPdis.size()==1) {
+					System.out.println("There is no valid path between those nodes");
+					JOptionPane.showMessageDialog(SSPin, "There is no valid path between those nodes");
+					break;
+				}
 				gr_new.addNode(SSPdis.get(0));
+				gr_new.getNode(SSPdis.get(0).getKey()).setInfo("");
+				gr_new.getNode(SSPdis.get(0).getKey()).setTag(0);
 				System.out.print(SSPdis.get(0).getKey());
 				for (int i=1; i<SSPdis.size(); i++) {
 					System.out.print(" --> "+SSPdis.get(i).getKey());
 					gr_new.addNode(SSPdis.get(i));
+					gr_new.getNode(SSPdis.get(i).getKey()).setInfo("");
+					gr_new.getNode(SSPdis.get(i).getKey()).setTag(0);
 					gr_new.connect(SSPdis.get(i-1).getKey(), SSPdis.get(i).getKey(), this.gr.getEdge(SSPdis.get(i-1).getKey(), SSPdis.get(i).getKey()).getWeight());
 				}
 				this.initGUI(gr_new);
@@ -257,6 +266,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			catch (Exception e) {
 				e.printStackTrace();
 			}
+			System.out.println();
 			break;
 
 		case "Shortest Path Distance":
@@ -364,6 +374,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			}
 
 			this.initGUI(gr_new);	
+			System.out.println();
 			break;
 
 		case "Is it Conncected ?":
