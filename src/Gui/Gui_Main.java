@@ -14,14 +14,14 @@ public class Gui_Main {
 		graph t = r.randomGraphSmallConnected();*/
 		
 		
-		Point3D p1 = new Point3D(99, 95);
+		Point3D p1 = new Point3D(306, 287);
 		Point3D p2 = new Point3D(203, 96);
 		Point3D p3 = new Point3D(154, 152);
 		Point3D p4 = new Point3D(455, 151);
-		Point3D p5 = new Point3D(687, 206);
-		Point3D p6 = new Point3D(142, 702);
+		Point3D p5 = new Point3D(1000, 420);
+		Point3D p6 = new Point3D(702, 230);
 		Point3D p7 = new Point3D(232, 437);
-		Point3D p8 = new Point3D(191, 602);
+		Point3D p8 = new Point3D(191, 326);
 		node n1 = new node(p1);
 		node n2 = new node(p2);
 		node n3 = new node(p3);
