@@ -9,24 +9,42 @@ public class graphFactory {
 	
 	public graphFactory () {;}
 	
-	public node randomNode() {
-		Point3D p = new Point3D((int)(Math.random()*1260)+10, (int)(Math.random()*700)+10);
+	public node nodeGenerator() {
+		Point3D p = new Point3D((int)(Math.random()*1260)+10, (int)(Math.random()*640)+70);
 		node ans = new node(p, 0);
 		return ans;
 	}
 	
+	public graph randomGraphLarge() {
+		graph t = new DGraph();
+		node p = nodeGenerator();
+		t.addNode(p);
+		for (int i=1; i<50; i++) {
+			node n = nodeGenerator();
+			t.addNode(n);
+		}
+		for (int i=0; i<50; i++) {
+			int ran = (int)(Math.random()*50);
+			int rat = (int)(Math.random()*50);	
+			t.connect(ran, rat, ((int)((i/3.43)*100))/100);
+			t.connect(rat, ran, ((int)((i/3.43)*100))/100);
+		}
+		return t;
+	}
+	
+	
 	public graph randomGraphSmallConnected() {
 		graph g = new DGraph();
-		node t1 = randomNode();
-		node t2 = randomNode();
-		node t3 = randomNode();
-		node t4 = randomNode();
-		node t5 = randomNode();
-		node t6 = randomNode();
-		node t7 = randomNode();
-		node t8 = randomNode();
-		node t9 = randomNode();
-		node t10 = randomNode();
+		node t1 = nodeGenerator();
+		node t2 = nodeGenerator();
+		node t3 = nodeGenerator();
+		node t4 = nodeGenerator();
+		node t5 = nodeGenerator();
+		node t6 = nodeGenerator();
+		node t7 = nodeGenerator();
+		node t8 = nodeGenerator();
+		node t9 = nodeGenerator();
+		node t10 = nodeGenerator();
 
 		g.addNode(t1);
 		g.addNode(t2);

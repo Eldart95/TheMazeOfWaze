@@ -10,8 +10,8 @@ public class Gui_Main {
 
 	public static void main(String[] args) {
 
-		graphFactory t = new graphFactory();
-		graph r = t.randomGraphSmallConnected();
+		graphFactory r = new graphFactory();
+		graph t = r.randomGraphSmallConnected();
 		
 		
 		/*Point3D p1 = new Point3D(99, 95);
@@ -50,7 +50,7 @@ public class Gui_Main {
 		g.connect(n1.getKey(), n5.getKey(), 23);
 		g.connect(n6.getKey(), n2.getKey(), 4.20);*/
 
-		GraphGui a = new GraphGui(r);
+		GraphGui a = new GraphGui(t);
 		a.setVisible(true);
 
 	}
