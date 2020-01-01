@@ -267,7 +267,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	 * Method that calculates and returns a path
 	 * that is passing thorugh every node in 
 	 * the target list
-	 * runtime complexity : infinte.
+	 * runtime complexity : forever.
 	 */
 
 	@Override
@@ -306,7 +306,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		
 	}
 	/**
-	 * based on java's shuffle method
+	 * based on javas shuffle method
 	 * @param target_nodes
 	 */
 
@@ -333,6 +333,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	 */
 	private boolean youMyNeigbour(node_data node_data,node_data node_data2) {
 		Collection<edge_data> edge = gr.getE(node_data.getKey());
+		if(edge==null) return false;
 		for(edge_data e:edge) {
 			if(e.getDest()==node_data2.getKey()) return true;
 			
@@ -391,15 +392,18 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		nd.add(1);
 		nd.add(5);
 		nd.add(0);
+		int i =0;
+		while(i<100) {
 		List<node_data> nl = h.TSP(nd);
+		i++;
 		
 		System.out.println(nl.get(0).getKey());
 		System.out.println(nl.get(1).getKey());
 		System.out.println(nl.get(2).getKey());
-		
-		GraphGui a = new GraphGui(g);
-		a.setVisible(true);
-		System.out.println("x");
+		}
+	
+	
+
 		
 		
 	}
