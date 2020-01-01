@@ -14,6 +14,7 @@ import java.util.List;
 
 
 import dataStructure.*;
+import gui.GraphGui;
 import utils.Point3D;
 
 /**
@@ -261,15 +262,20 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 		return false;
 	}
+	
+	/**
+	 * Method that calculates and returns a path
+	 * that is passing thorugh every node in 
+	 * the target list
+	 * runtime complexity : infinte.
+	 */
 
 	@Override
-	public List<node_data> TSP(List<Integer> targets) { // ~~ELDAR: NEED TO CHECK AGAIN
-		//if(!isConnected()) return null;
-		//System.out.println(targets.size());
+	public List<node_data> TSP(List<Integer> targets) { 
+		//if(!isConnected()) return null; // *** yossi **** : ma osim im ze ?? 
 		if(targets.size()==0) throw new RuntimeException("Empty list of targets");
 		ArrayList<node_data> ans = new ArrayList<node_data>();
 		if(targets.size()==1) {
-		//	System.out.println("x");
 			ans.add(gr.getNode(targets.get(0)));
 			return ans;
 		}
@@ -282,9 +288,11 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			}
 		}
 		boolean flag = false;
+		
 		for(int i=1;i<2020;i++) {
 			for(int j=1;j<target_nodes.size();j++) {
-				flag=isTherePath(target_nodes.get(j-1),target_nodes.get(j));
+				flag=youMyNeigbour(target_nodes.get(j-1),target_nodes.get(j));
+				
 				if(flag==false) break;
 			
 			}
@@ -297,16 +305,43 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 
 		
 	}
+	/**
+	 * based on java's shuffle method
+	 * @param target_nodes
+	 */
 
 	private void shuffle(ArrayList<node_data> target_nodes) {
 		Collections.shuffle(target_nodes);
 		
 	}
+	/**
+	 * used to check if there is a path between 2 nodes
+	 * @param node_data
+	 * @param node_data2
+	 * @return
+	 */
 
 	private boolean isTherePath(node_data node_data, node_data node_data2) {
 		if(shortestPathDist(node_data.getKey(), node_data2.getKey())!=Double.MAX_VALUE) return true;
 		return false;
 	}
+	/**
+	 * checks if two nodes are connected
+	 * @param node_data
+	 * @param node_data2
+	 * @return
+	 */
+	private boolean youMyNeigbour(node_data node_data,node_data node_data2) {
+		Collection<edge_data> edge = gr.getE(node_data.getKey());
+		for(edge_data e:edge) {
+			if(e.getDest()==node_data2.getKey()) return true;
+			
+		}
+		return false;
+	}
+	/**
+	 * deep copy
+	 */
 
 	@Override
 	public graph copy() {
@@ -353,8 +388,8 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		Graph_Algo h = new Graph_Algo(g);
 		
 		List<Integer> nd = new ArrayList<Integer>();
-		nd.add(5);
 		nd.add(1);
+		nd.add(5);
 		nd.add(0);
 		List<node_data> nl = h.TSP(nd);
 		
@@ -362,6 +397,9 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		System.out.println(nl.get(1).getKey());
 		System.out.println(nl.get(2).getKey());
 		
+		GraphGui a = new GraphGui(g);
+		a.setVisible(true);
+		System.out.println("x");
 		
 		
 	}

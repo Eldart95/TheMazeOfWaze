@@ -60,5 +60,8 @@ class Ex2Test {
 		a.setVisible(true);
 		return true;	
 	}
+	
+	///////Q: WHY DOES ENVIROMENTAL ACTIVISTS CODE ONLY WITH JAVA ?
+   ////////A: BECUASE IT HAS GARBAGE COLLECTOR 
 
 }
