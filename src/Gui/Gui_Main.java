@@ -10,11 +10,11 @@ public class Gui_Main {
 
 	public static void main(String[] args) {
 
-		graphFactory r = new graphFactory();
-		graph t = r.randomGraphSmallConnected();
+	/*	graphFactory r = new graphFactory();
+		graph t = r.randomGraphSmallConnected();*/
 		
 		
-		/*Point3D p1 = new Point3D(99, 95);
+		Point3D p1 = new Point3D(99, 95);
 		Point3D p2 = new Point3D(203, 96);
 		Point3D p3 = new Point3D(154, 152);
 		Point3D p4 = new Point3D(455, 151);
@@ -22,14 +22,14 @@ public class Gui_Main {
 		Point3D p6 = new Point3D(142, 702);
 		Point3D p7 = new Point3D(232, 437);
 		Point3D p8 = new Point3D(191, 602);
-		node n1 = new node(p1, 0);
-		node n2 = new node(p2, 0);
-		node n3 = new node(p3, 0);
-		node n4 = new node(p4, 0);
-		node n5 = new node(p5, 0);
-		node n6 = new node(p6, 0);
-		node n7 = new node(p7, 0);
-		node n8 = new node(p8, 0);
+		node n1 = new node(p1);
+		node n2 = new node(p2);
+		node n3 = new node(p3);
+		node n4 = new node(p4);
+		node n5 = new node(p5);
+		node n6 = new node(p6);
+		node n7 = new node(p7);
+		node n8 = new node(p8);
 
 		graph g = new DGraph();
 		g.addNode(n1);//0
@@ -48,12 +48,10 @@ public class Gui_Main {
 		g.connect(n3.getKey(), n5.getKey(), 3.55);
 		g.connect(n5.getKey(), n7.getKey(), 42);
 		g.connect(n1.getKey(), n5.getKey(), 23);
-		g.connect(n6.getKey(), n2.getKey(), 4.20);*/
+		g.connect(n6.getKey(), n2.getKey(), 4.20);
 
-		GraphGui a = new GraphGui(t);
+		GraphGui a = new GraphGui(g);
 		a.setVisible(true);
-
 	}
-
 }
 
