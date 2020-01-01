@@ -1,10 +1,10 @@
-package Gui;
+package gui;
 
 import dataStructure.DGraph;
 import dataStructure.graph;
 import dataStructure.node;
+import gui.graphFactory;
 import utils.Point3D;
-import Gui.graphFactory;
 
 public class Gui_Main {
 

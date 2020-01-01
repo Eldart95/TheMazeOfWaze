@@ -1,4 +1,4 @@
-package Gui;
+package gui;
 
 import dataStructure.DGraph;
 import dataStructure.graph;

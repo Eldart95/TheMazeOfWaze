@@ -31,9 +31,10 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		this.gr=new DGraph();
 	}
 
-	public Graph_Algo(DGraph g) {
-		this.gr=g;
+	public Graph_Algo(graph g) {
+		this.gr=(DGraph)g;
 	}
+	
 
 	@Override
 	public void init(graph g) {
