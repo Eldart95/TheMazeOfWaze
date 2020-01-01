@@ -12,7 +12,7 @@ public class Gui_Main {
 
 	/*	graphFactory r = new graphFactory();
 		graph t = r.randomGraphSmallConnected();*/
-		
+		//boker tov eldar.
 		
 		Point3D p1 = new Point3D(306, 287);
 		Point3D p2 = new Point3D(203, 96);
