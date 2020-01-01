@@ -284,7 +284,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		for(int i=1;i<2020;i++) {
 			for(int j=1;j<target_nodes.size();j++) {
 				flag=isTherePath(target_nodes.get(j-1),target_nodes.get(j));
-				
+				if(flag==false) break;
 			
 			}
 			if(flag==true) return target_nodes;
@@ -303,7 +303,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	}
 
 	private boolean isTherePath(node_data node_data, node_data node_data2) {
-		if(shortestPath(node_data.getKey(), node_data2.getKey())!=null) return true;
+		if(shortestPathDist(node_data.getKey(), node_data2.getKey())!=Double.MAX_VALUE) return true;
 		return false;
 	}
 
@@ -350,11 +350,16 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		g.connect(n6.getKey(), n2.getKey(), 4.20);
 		
 		Graph_Algo h = new Graph_Algo(g);
-		System.out.println(h.shortestPathDist(n2.getKey(), n1.getKey()));
-		List<node_data> nd = new ArrayList<node_data>();
-		nd = h.shortestPath(n1.getKey(), n2.getKey());
-		System.out.println(nd.get(0).getKey());
-		System.out.println(nd.get(1).getKey());
+		
+		List<Integer> nd = new ArrayList<Integer>();
+		nd.add(5);
+		nd.add(1);
+		nd.add(0);
+		List<node_data> nl = h.TSP(nd);
+		
+		System.out.println(nl.get(0).getKey());
+		System.out.println(nl.get(1).getKey());
+		System.out.println(nl.get(2).getKey());
 		
 		
 		
