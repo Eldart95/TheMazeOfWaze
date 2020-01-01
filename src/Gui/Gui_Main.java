@@ -4,12 +4,17 @@ import dataStructure.DGraph;
 import dataStructure.graph;
 import dataStructure.node;
 import utils.Point3D;
+import Gui.graphFactory;
 
 public class Gui_Main {
 
 	public static void main(String[] args) {
 
-		Point3D p1 = new Point3D(99, 95);
+		graphFactory t = new graphFactory();
+		graph r = t.randomGraphSmallConnected();
+		
+		
+		/*Point3D p1 = new Point3D(99, 95);
 		Point3D p2 = new Point3D(203, 96);
 		Point3D p3 = new Point3D(154, 152);
 		Point3D p4 = new Point3D(455, 151);
@@ -43,9 +48,9 @@ public class Gui_Main {
 		g.connect(n3.getKey(), n5.getKey(), 3.55);
 		g.connect(n5.getKey(), n7.getKey(), 42);
 		g.connect(n1.getKey(), n5.getKey(), 23);
-		g.connect(n6.getKey(), n2.getKey(), 4.20);
+		g.connect(n6.getKey(), n2.getKey(), 4.20);*/
 
-		GraphGui a = new GraphGui(g);
+		GraphGui a = new GraphGui(r);
 		a.setVisible(true);
 
 	}

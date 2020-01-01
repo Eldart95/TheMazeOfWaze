@@ -98,7 +98,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 		this.setSize(1280, 720);
 		this.setTitle("Hello and welcome to The Maze Of Waze !");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ImageIcon img = new ImageIcon("mari.png");
+		ImageIcon img = new ImageIcon("Rocket.png");
 		this.setIconImage(img.getImage());
 		this.setResizable(true);
 
