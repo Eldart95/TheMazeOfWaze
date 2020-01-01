@@ -37,11 +37,11 @@ public class node implements node_data,Serializable {
 		this.location=o.location;
 	}
 
-	public node (Point3D loc, double weight) {
+	public node (Point3D loc) {
 		this.key=keyMaker;
 		this.location=loc;
 		this.tag=0;
-		this.weight=weight;
+		this.weight=0;
 		this.info="";
 		keyMaker++;
 	}

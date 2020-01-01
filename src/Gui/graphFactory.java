@@ -11,7 +11,7 @@ public class graphFactory {
 	
 	public node nodeGenerator() {
 		Point3D p = new Point3D((int)(Math.random()*1260)+10, (int)(Math.random()*640)+70);
-		node ans = new node(p, 0);
+		node ans = new node(p);
 		return ans;
 	}
 	
