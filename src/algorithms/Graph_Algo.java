@@ -307,7 +307,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			
 			shuffle(target_nodes);
 		}
-		if(ans.isEmpty()) return null;
+		if(ans.size()<2) return null;
 		return ans;
 	
 	
@@ -410,17 +410,16 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		Graph_Algo h = new Graph_Algo(g);
 		
 		List<Integer> nd = new ArrayList<Integer>();
-		nd.add(0);
-		nd.add(4);
+		nd.add(2);
+		nd.add(5);
 		
 		
 		List<node_data> nl = h.TSP(nd);
 		
 		
 		System.out.println(nl.get(0).getKey());
-		System.out.println(nl.get(1).getKey());
-		System.out.println(nl.get(2).getKey());
-		System.out.println(nl.get(3).getKey());
+		
+		
 
 	
 	
