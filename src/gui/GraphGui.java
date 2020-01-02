@@ -384,12 +384,12 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			for (int i=1; i<TSP.size(); i++) {
 				forJmessage=""+forJmessage+"-->"+TSP.get(i).getKey();
 				System.out.print(" --> "+TSP.get(i).getKey());
-			/*	if (!((DGraph)gr_new).containsN(TSP.get(i).getKey())) {
+				if (!((DGraph)gr_new).containsN(TSP.get(i).getKey())) {
 					gr_new.addNode(TSP.get(i));	
 				}
 				if (!((DGraph)gr_new).containsE(TSP.get(i-1).getKey(), TSP.get(i).getKey())) {
 					gr_new.connect(TSP.get(i-1).getKey(), TSP.get(i).getKey(), this.original.getEdge(TSP.get(i-1).getKey(), TSP.get(i).getKey()).getWeight());
-				}*/
+				}
 				
 			}
 
