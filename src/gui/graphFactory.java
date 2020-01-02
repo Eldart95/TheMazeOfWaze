@@ -10,7 +10,7 @@ public class graphFactory {
 	public graphFactory () {;}
 	
 	public node nodeGenerator() {
-		Point3D p = new Point3D((int)(Math.random()*1260)+10, (int)(Math.random()*640)+70);
+		Point3D p = new Point3D((int)(Math.random()*1240)+20, (int)(Math.random()*630)+70);
 		node ans = new node(p);
 		return ans;
 	}
@@ -26,8 +26,10 @@ public class graphFactory {
 		for (int i=0; i<50; i++) {
 			int ran = (int)(Math.random()*50);
 			int rat = (int)(Math.random()*50);	
+			int rab = (int)(Math.random()*50);	
+			int ras = (int)(Math.random()*50);	
 			t.connect(ran, rat, ((int)((i/3.43)*100))/100);
-			t.connect(rat, ran, ((int)((i/3.43)*100))/100);
+			t.connect(rab, ras, ((int)((i/3.43)*100))/100);
 		}
 		return t;
 	}

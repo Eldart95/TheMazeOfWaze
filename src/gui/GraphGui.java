@@ -267,6 +267,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 				e.printStackTrace();
 			}
 			System.out.println();
+			System.out.println();
 			break;
 
 		case "Shortest Path Distance":
@@ -285,6 +286,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(SPDinput, "You've entered illegal node's-key");
 					System.out.println("You've entered illegal node's-key");
+					System.out.println();
 					break;
 				}
 
@@ -302,17 +304,19 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 				}
 				else {
 					JOptionPane.showMessageDialog(SPDinput, "The Shortest Path Distance is: " + x);
-					System.out.println("Shortest Path Distance is:" + x);
+					System.out.println("Shortest Path Distance is: " + x);
 				}
 			}
 			catch (Exception e) {
 				e.printStackTrace();
 			}
+			System.out.println();
 			break;
 
 		case "The SalesMan Problem": 
 			JFrame TSPinput = new JFrame();
 
+			System.out.println("The SalesMan Problem: ");
 			String SourceNodeTSP = JOptionPane.showInputDialog(TSPinput,"How many nodes ?");
 			int manyTSP=1;
 			try {
@@ -358,22 +362,36 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 				}	
 				TSPnodes.add(TSPkey);
 			}
+			if (TSPnodes.size()!=manyTSP) { 
+				JOptionPane.showMessageDialog(TSPinput, "You did not enter enough nodes.");
+				break;
+			}
 
 			Graph_Algo newGTSP = new Graph_Algo();
 			newGTSP.init(gr);
 
 			List<node_data> TSP = newGTSP.TSP(TSPnodes);
 			graph gr_new=new DGraph();
-
+			
+			String forJmessage="";
 			gr_new.addNode(TSP.get(0));
+			forJmessage=""+forJmessage+TSP.get(0).getKey();
 			System.out.print(TSP.get(0).getKey());
+			
 			for (int i=1; i<TSP.size(); i++) {
+				forJmessage=""+forJmessage+"-->"+TSP.get(i).getKey();
 				System.out.print(" --> "+TSP.get(i).getKey());
-				gr_new.addNode(TSP.get(i));
-				gr_new.connect(TSP.get(i-1).getKey(), TSP.get(i).getKey(), this.gr.getEdge(TSP.get(i-1).getKey(), TSP.get(i).getKey()).getWeight());
+			/*	if (!((DGraph)gr_new).containsN(TSP.get(i).getKey())) {
+					gr_new.addNode(TSP.get(i));	
+				}
+				if (!((DGraph)gr_new).containsE(TSP.get(i-1).getKey(), TSP.get(i).getKey())) {
+					gr_new.connect(TSP.get(i-1).getKey(), TSP.get(i).getKey(), this.original.getEdge(TSP.get(i-1).getKey(), TSP.get(i).getKey()).getWeight());
+				}*/
+				
 			}
 
-			this.initGUI(gr_new);	
+			this.initGUI(gr_new);
+			JOptionPane.showMessageDialog(TSPinput, forJmessage);
 			System.out.println();
 			break;
 

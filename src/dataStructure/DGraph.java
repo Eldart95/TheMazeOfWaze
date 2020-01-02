@@ -139,4 +139,16 @@ public class DGraph implements graph,Serializable{
 	@Override
 	public int getMC() { return MC; }
 	
+	public boolean containsN(int k) {
+		if (this.nodesMap.containsKey(k)) { return true; }
+		return false;
+	}
+	
+	public boolean containsE(int s, int d) {
+		if (this.edgesMap.containsKey(s)) {
+			if (this.edgesMap.get(s).containsKey(d)) { return true; }
+		}
+		return false;
+	}
+	
 }

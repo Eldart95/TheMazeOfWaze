@@ -10,11 +10,11 @@ public class Gui_Main {
 
 	public static void main(String[] args) {
 
-	/*	graphFactory r = new graphFactory();
-		graph t = r.randomGraphSmallConnected();*/
-		//boker tov eldar.
+		graphFactory r = new graphFactory();
+		graph g = r.randomGraphSmallConnected();
 		
-		Point3D p1 = new Point3D(306, 287);
+		
+		/*Point3D p1 = new Point3D(306, 287);
 		Point3D p2 = new Point3D(203, 96);
 		Point3D p3 = new Point3D(154, 152);
 		Point3D p4 = new Point3D(455, 151);
@@ -48,7 +48,7 @@ public class Gui_Main {
 		g.connect(n3.getKey(), n5.getKey(), 3.55);
 		g.connect(n5.getKey(), n7.getKey(), 42);
 		g.connect(n1.getKey(), n5.getKey(), 23);
-		g.connect(n6.getKey(), n2.getKey(), 4.20);
+		g.connect(n6.getKey(), n2.getKey(), 4.20);*/
 
 		GraphGui a = new GraphGui(g);
 		a.setVisible(true);
