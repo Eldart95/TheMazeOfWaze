@@ -276,6 +276,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) { 
+	
 		//if(!isConnected()) return null; // *** yossi **** : ma osim im ze ?? 
 		if(targets.size()==0) throw new RuntimeException("Empty list of targets");
 		ArrayList<node_data> ans = new ArrayList<node_data>();
@@ -286,29 +287,44 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		
 		Collection<node_data> all_nodes = gr.getV(); //collection of all nodes in the graph
 		ArrayList<node_data> target_nodes = new ArrayList<node_data>();//array list that will contain target nodes ONLY
+		ArrayList<node_data> all_nodesList = new ArrayList<node_data>();//array list that will contain ALL nodes
 		for(node_data nd:all_nodes) {
+			nd.setTag(0);
+			all_nodesList.add(nd);
 			if(targets.contains(nd.getKey())) {
 				target_nodes.add(nd);
 			}
 		}
-		boolean flag = false;
+	
 		
 		for(int i=1;i<2020;i++) {
 			for(int j=1;j<target_nodes.size();j++) {
-				flag=youMyNeigbour(target_nodes.get(j-1),target_nodes.get(j));
-				
-				if(flag==false) break;
-			
+				ans.addAll(isTherePath(target_nodes.get(j-1), target_nodes.get(j)));
+				target_nodes.get(j-1).setTag(1);
+				target_nodes.get(j).setTag(1);
 			}
-			if(flag==true) return target_nodes;
+			if(allTargetsVisted(target_nodes)) break;
+			
 			shuffle(target_nodes);
 		}
-		
-		return target_nodes;
-		
-
-		
+		if(ans.isEmpty()) return null;
+		return ans;
+	
+	
 	}
+	/**
+	 * checks if all target nodes have been visited
+	 * helper of the TSP
+	 * @param list
+	 * @return 
+	 */
+	private boolean allTargetsVisted(List<node_data> list) {
+		for(node_data data:list) {
+			if(data.getTag()==0) return false;
+		}
+		return true;
+	}
+
 	/**
 	 * based on javas shuffle method
 	 * @param target_nodes
@@ -325,9 +341,10 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	 * @return
 	 */
 
-	private boolean isTherePath(node_data node_data, node_data node_data2) {
-		if(shortestPathDist(node_data.getKey(), node_data2.getKey())!=Double.MAX_VALUE) return true;
-		return false;
+	private List<node_data> isTherePath(node_data node_data, node_data node_data2) {
+		List<node_data> ans = shortestPath(node_data.getKey(), node_data2.getKey());
+		if(ans!=null) return ans;
+		return null;
 	}
 	/**
 	 * checks if two nodes are connected
@@ -393,18 +410,18 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		Graph_Algo h = new Graph_Algo(g);
 		
 		List<Integer> nd = new ArrayList<Integer>();
-		nd.add(1);
-		nd.add(5);
 		nd.add(0);
-		int i =0;
-		while(i<100) {
+		nd.add(4);
+		
+		
 		List<node_data> nl = h.TSP(nd);
-		i++;
+		
 		
 		System.out.println(nl.get(0).getKey());
 		System.out.println(nl.get(1).getKey());
 		System.out.println(nl.get(2).getKey());
-		}
+		System.out.println(nl.get(3).getKey());
+
 	
 	
 

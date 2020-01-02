@@ -374,6 +374,9 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			graph gr_new=new DGraph();
 			
 			String forJmessage="";
+			if(TSP.isEmpty()) {
+				break;
+			}
 			gr_new.addNode(TSP.get(0));
 			forJmessage=""+forJmessage+TSP.get(0).getKey();
 			System.out.print(TSP.get(0).getKey());
