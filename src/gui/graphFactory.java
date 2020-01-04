@@ -6,15 +6,15 @@ import dataStructure.node;
 import utils.Point3D;
 
 public class graphFactory {
-	
+
 	public graphFactory () {;}
-	
+
 	public node nodeGenerator() {
 		Point3D p = new Point3D((int)(Math.random()*1240)+20, (int)(Math.random()*630)+70);
 		node ans = new node(p);
 		return ans;
 	}
-	
+
 	public graph randomGraphLarge() {
 		graph t = new DGraph();
 		node p = nodeGenerator();
@@ -33,8 +33,7 @@ public class graphFactory {
 		}
 		return t;
 	}
-	
-	
+
 	public graph randomGraphSmallConnected() {
 		graph g = new DGraph();
 		node t1 = nodeGenerator();
@@ -58,7 +57,7 @@ public class graphFactory {
 		g.addNode(t8);
 		g.addNode(t9);
 		g.addNode(t10);
-		
+
 		g.connect(t1.getKey(), t9.getKey(), 1.2);
 		g.connect(t1.getKey(), t6.getKey(), 1.56);
 		g.connect(t2.getKey(), t5.getKey(), 6.4);
@@ -79,8 +78,8 @@ public class graphFactory {
 		g.connect(t9.getKey(), t10.getKey(), 6.9);
 		g.connect(t10.getKey(), t8.getKey(), 7.2);
 		g.connect(t10.getKey(), t7.getKey(), 1.88);
-		
+
 		return g;
 	}
-	
+
 }

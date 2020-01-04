@@ -12,10 +12,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import dataStructure.*;
-import gui.GraphGui;
-import utils.Point3D;
 
 /**
  * This class represents the set of graph-theory algorithms
@@ -25,7 +22,7 @@ import utils.Point3D;
 public class Graph_Algo implements graph_algorithms, Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private DGraph gr;
 
 	public Graph_Algo() {
@@ -35,7 +32,6 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	public Graph_Algo(graph g) {
 		this.gr=(DGraph)g;
 	}
-	
 
 	@Override
 	public void init(graph g) {
@@ -43,10 +39,10 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		else { throw new RuntimeException("Error initialaizing the graph"); }
 	}
 	
+	@Override
 	/**
 	 * deSerialize
 	 */
-	@Override
 	public void init(String file_name) {
 		try {
 			ObjectInputStream in=new ObjectInputStream(new FileInputStream(file_name));
@@ -59,10 +55,10 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 	}
 	
+	@Override
 	/**
 	 * Serialize 
 	 */
-	@Override
 	public void save(String file_name) {
 		try {
 			OutputStream outStream = new FileOutputStream(file_name);
@@ -75,13 +71,13 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			throw new RuntimeException("Error saving to file");
 		}	
 	}
-
+	
+	@Override
 	/**
 	 * Check if the current graph is strongly connected.
 	 * return true if it is, else false.
 	 */
-	@Override
-	public boolean isConnected() { // WORKING
+	public boolean isConnected() {
 		DGraph temp = (DGraph) this.copy();
 		if (temp.nodesMap.size()<2) { return false; }
 		if (temp.edgeSize()<2) { return false; }
@@ -90,10 +86,10 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 		Collection<node_data> ns = temp.getV();
 		for(node_data t:ns) {
-		DFS(t); 
-		break;
+			DFS(t); 
+			break;
 		}
-		
+
 		for (node_data node : ns) {
 			if (node.getTag() == 0) {
 				return false;
@@ -105,8 +101,8 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 		Collection<node_data> nss = temp.getV();
 		for(node_data t:nss) {
-		DFS(t); 
-		break;
+			DFS(t); 
+			break;
 		}
 		for (node_data node1 : nss) {
 			if (node1.getTag() == 0) {
@@ -115,7 +111,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 		return true;
 	}
-	
+
 	/**
 	 * famous DFS algorithm.
 	 * used for traversing a graph.
@@ -134,7 +130,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			}
 		}
 	}
-	
+
 	/**
 	 * reverse garph's edges
 	 * for each edge, replace dest with source.
@@ -164,7 +160,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			return -1;
 		}
 	}
-	
+
 	/**
 	 * Calculates shortest path between two selected nodes.
 	 * if there is'nt a path
@@ -173,7 +169,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		dijakstra(src);
-		
+
 		List<node_data> ans = new ArrayList<node_data>();
 		node_data current = gr.getNode(dest);
 		while(!current.getInfo().isEmpty()||current.getKey()==gr.getNode(src).getKey())	{
@@ -184,7 +180,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		ans.add(0, current);
 		return ans;
 	}
-	
+
 	/**
 	 * The famous dijakstra algorithm for calculating the paths from a selected node.
 	 * to all other nodes in graph.
@@ -193,7 +189,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	 * @param src
 	 */
 	public void dijakstra(int src) {
-		
+
 		List<node_data>  unvisited = new LinkedList<node_data>();
 		Collection<node_data> n = gr.getV(); 
 		for(node_data nd:n) unvisited.add(nd);
@@ -204,22 +200,21 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 
 		this.gr.nodesMap.get(src).setWeight(0);
-		
+
 		node_data current = gr.nodesMap.get(src); //this node
 
 		while(!unvisited.isEmpty()||Infinity(gr)||current!=null) {
-			
+
 			visited.add(current);
 
 			unvisited.remove(current);
-			
+
 			Collection<edge_data> e = gr.getE(current.getKey()); //this is all the edges starts current node
 			if(e==null) { //case when no edges coming out of the node
-				
+
 				current = unvistedmin(unvisited);
 				if(current==null) break;
 				continue;
-				
 			}
 			for(edge_data edge:e) {
 				node_data destnode = gr.getNode(edge.getDest()); // this is one of the neighbors of the current node
@@ -228,14 +223,12 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 					destnode.setInfo(""+current.getKey());																		// at this node weight is less than the dest node weight
 				}
 			}
-			
 			current = unvistedmin(unvisited);	
 			if(current==null) break;
-			
 		}
 		return;
 	}
-	
+
 	/**
 	 * Creates a list of unvisited nodes.
 	 * @param ar
@@ -251,7 +244,6 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				mini=ar.get(i);
 			}
 		}
-		
 		return mini;
 	}
 
@@ -267,25 +259,23 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		}
 		return false;
 	}
-	
+
+	@Override
 	/**
 	 * Method that calculates and returns a path
 	 * that is passing thorugh every node in 
 	 * the target list
 	 * runtime complexity : forever.
 	 */
-
-	@Override
 	public List<node_data> TSP(List<Integer> targets) { 
-	
-		//if(!isConnected()) return null; // *** yossi **** : ma osim im ze ?? 
+
 		if(targets.size()==0) throw new RuntimeException("Empty list of targets");
 		ArrayList<node_data> ans = new ArrayList<node_data>();
 		if(targets.size()==1) {
 			ans.add(gr.getNode(targets.get(0)));
 			return ans;
 		}
-		
+
 		Collection<node_data> all_nodes = gr.getV(); //collection of all nodes in the graph
 		ArrayList<node_data> target_nodes = new ArrayList<node_data>();//array list that will contain target nodes ONLY
 		ArrayList<node_data> all_nodesList = new ArrayList<node_data>();//array list that will contain ALL nodes
@@ -296,8 +286,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				target_nodes.add(nd);
 			}
 		}
-	
-		
+
 		for(int i=1;i<2020;i++) {
 			for(int j=1;j<target_nodes.size();j++) {
 				ans.addAll(isTherePath(target_nodes.get(j-1), target_nodes.get(j)));
@@ -305,22 +294,20 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				target_nodes.get(j).setTag(1);
 			}
 			if(allTargetsVisted(target_nodes)) break;
-			
+
 			shuffle(target_nodes);
 		}
 		if(ans.size()<2) return null;
 		RemoveDup(ans);
-		return ans;
-	
-	
+		return ans;	
 	}
+
 	private void RemoveDup(ArrayList<node_data> ans) {
 		for(int i=1;i<ans.size();i++) {
 			if(ans.get(i-1)==ans.get(i)) {
 				ans.remove(i-1);
 			}
-		}
-		
+		}	
 	}
 
 	/**
@@ -340,103 +327,29 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	 * based on javas shuffle method
 	 * @param target_nodes
 	 */
-
 	private void shuffle(ArrayList<node_data> target_nodes) {
-		Collections.shuffle(target_nodes);
-		
+		Collections.shuffle(target_nodes);	
 	}
+
 	/**
 	 * used to check if there is a path between 2 nodes
 	 * @param node_data
 	 * @param node_data2
 	 * @return
 	 */
-
 	private List<node_data> isTherePath(node_data node_data, node_data node_data2) {
 		List<node_data> ans = shortestPath(node_data.getKey(), node_data2.getKey());
 		if(ans!=null) return ans;
 		return null;
 	}
-	/**
-	 * checks if two nodes are connected
-	 * @param node_data
-	 * @param node_data2
-	 * @return
-	 */
-	private boolean youMyNeigbour(node_data node_data,node_data node_data2) {
-		Collection<edge_data> edge = gr.getE(node_data.getKey());
-		if(edge==null) return false;
-		for(edge_data e:edge) {
-			if(e.getDest()==node_data2.getKey()) return true;
-			
-		}
-		return false;
-	}
+
+	@Override	
 	/**
 	 * deep copy
 	 */
-
-	@Override
 	public graph copy() {
 		graph copy = new DGraph(this.gr);
 		return copy;
-	}
-	public static void main(String[] args) {
-		Point3D p1 = new Point3D(99, 95);
-		Point3D p2 = new Point3D(203, 96);
-		Point3D p3 = new Point3D(154, 152);
-		Point3D p4 = new Point3D(455, 151);
-		Point3D p5 = new Point3D(687, 206);
-		Point3D p6 = new Point3D(142, 702);
-		Point3D p7 = new Point3D(232, 437);
-		Point3D p8 = new Point3D(191, 602);
-		node n1 = new node(p1);
-		node n2 = new node(p2);
-		node n3 = new node(p3);
-		node n4 = new node(p4);
-		node n5 = new node(p5);
-		node n6 = new node(p6);
-		node n7 = new node(p7);
-		node n8 = new node(p8);
-		
-		DGraph g = new DGraph();
-		g.addNode(n1);//0
-		g.addNode(n2);//1
-		g.addNode(n3);//2
-		g.addNode(n4);//3
-		g.addNode(n5);//4
-		g.addNode(n6);//5
-		g.addNode(n7);//6
-		g.addNode(n8);//7
-		g.connect(n1.getKey(), n2.getKey(), 7);
-		g.connect(n2.getKey(), n1.getKey(), 2.77);
-		g.connect(n2.getKey(), n3.getKey(), 4.5);
-		g.connect(n5.getKey(), n3.getKey(), 10);
-		g.connect(n6.getKey(), n4.getKey(), 4.11);
-		g.connect(n3.getKey(), n5.getKey(), 3.55);
-		g.connect(n5.getKey(), n7.getKey(), 42);
-		g.connect(n1.getKey(), n5.getKey(), 23);
-		g.connect(n6.getKey(), n2.getKey(), 4.20);
-		
-		Graph_Algo h = new Graph_Algo(g);
-		
-		List<Integer> nd = new ArrayList<Integer>();
-		nd.add(2);
-		nd.add(5);
-		
-		
-		List<node_data> nl = h.TSP(nd);
-		
-		
-		System.out.println(nl.get(0).getKey());
-		
-		
-
-	
-	
-
-		
-		
 	}
 
 }

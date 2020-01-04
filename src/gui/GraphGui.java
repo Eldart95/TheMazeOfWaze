@@ -346,6 +346,46 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 				break;
 			}
 
+			if (manyTSP==2) {
+				int cmon2;
+				graph gr_new=new DGraph();
+				SourceNodeTSP = JOptionPane.showInputDialog(TSPinput,"Enter node-key 1/2:");
+				try {
+					cmon = Integer.parseInt(SourceNodeTSP);
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(TSPinput, "Ilegal key.");
+					break;
+				}
+				gr_new.addNode(this.gr.getNode(cmon));
+
+				String DestNodeTSP = JOptionPane.showInputDialog(TSPinput,"Enter node-key 2/2:");
+				try {
+					cmon2 = Integer.parseInt(DestNodeTSP);
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(TSPinput, "Ilegal key.");
+					break;
+				}
+				gr_new.addNode(this.gr.getNode(cmon2));
+
+				if (gr.getEdge(cmon, cmon2)!=null) {
+					gr_new.connect(gr_new.getNode(cmon).getKey(), gr_new.getNode(cmon2).getKey(), this.gr.getEdge(cmon, cmon2).getWeight());
+					this.initGUI(gr_new);
+					System.out.println(cmon+" --> "+ cmon2);
+					break;
+				}
+				else if(gr.getEdge(cmon2, cmon)!=null){
+					gr_new.connect(gr_new.getNode(cmon2).getKey(), gr_new.getNode(cmon).getKey(), this.gr.getEdge(cmon2, cmon).getWeight());
+					this.initGUI(gr_new);	
+					System.out.println(cmon2+" --> "+ cmon);
+					break;
+				}
+				else {
+					JOptionPane.showMessageDialog(TSPinput, "Coudln't find path.");
+					System.out.println("Coudln't find path.");
+					break;	
+				}
+			}
+
 			List<Integer> TSPnodes = new ArrayList<Integer>();
 			int TSPkey=0;
 			for (int i=0; i<manyTSP; i++) {
@@ -372,15 +412,16 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 
 			List<node_data> TSP = newGTSP.TSP(TSPnodes);
 			graph gr_new=new DGraph();
-			
+
 			String forJmessage="";
-			if(TSP.isEmpty()) {
+			if(TSP.isEmpty() || TSP==null) {
+				JOptionPane.showMessageDialog(TSPinput, "Couldn't find path.");
 				break;
 			}
 			gr_new.addNode(TSP.get(0));
 			forJmessage=""+forJmessage+TSP.get(0).getKey();
 			System.out.print(TSP.get(0).getKey());
-			
+
 			for (int i=1; i<TSP.size(); i++) {
 				forJmessage=""+forJmessage+"-->"+TSP.get(i).getKey();
 				System.out.print(" --> "+TSP.get(i).getKey());
@@ -390,7 +431,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 				if (!((DGraph)gr_new).containsE(TSP.get(i-1).getKey(), TSP.get(i).getKey())) {
 					gr_new.connect(TSP.get(i-1).getKey(), TSP.get(i).getKey(), this.original.getEdge(TSP.get(i-1).getKey(), TSP.get(i).getKey()).getWeight());
 				}
-				
+
 			}
 
 			this.initGUI(gr_new);

@@ -32,7 +32,7 @@ class Ex2Test {
 	static void setUpBeforeClass() throws Exception {
 		_graph = tinyGraph();
 	}
-	
+
 	@BeforeEach
 	void setUp() throws Exception {
 	}
@@ -50,7 +50,7 @@ class Ex2Test {
 		boolean ans = drawGraph(_graph);
 		assertTrue(ans);
 	}
-	
+
 	private static graph tinyGraph() {
 		graph ans = new DGraph();
 		return ans;
@@ -60,8 +60,8 @@ class Ex2Test {
 		a.setVisible(true);
 		return true;	
 	}
-	
+
 	///////Q: WHY DOES ENVIROMENTAL ACTIVISTS CODE ONLY WITH JAVA ?
-   ////////A: BECUASE IT HAS GARBAGE COLLECTOR 
+	////////A: BECUASE IT HAS GARBAGE COLLECTOR 
 
 }
