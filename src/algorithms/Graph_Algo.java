@@ -83,6 +83,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	@Override
 	public boolean isConnected() { // WORKING
 		DGraph temp = (DGraph) this.copy();
+		if (temp.nodesMap.size()<2) { return false; }
 		if (temp.edgeSize()<2) { return false; }
 		for(int key:temp.nodesMap.keySet()) {
 			temp.nodesMap.get(key).setTag(0);

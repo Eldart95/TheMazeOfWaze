@@ -55,7 +55,7 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 	public void paint(Graphics d) {
 		super.paint(d);
 
-		if (gr != null) {
+		if (gr != null && gr.nodeSize()>1) {
 			//get nodes
 			Collection<node_data> nodes = gr.getV();
 
