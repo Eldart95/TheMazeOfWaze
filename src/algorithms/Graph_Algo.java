@@ -309,10 +309,20 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			shuffle(target_nodes);
 		}
 		if(ans.size()<2) return null;
+		RemoveDup(ans);
 		return ans;
 	
 	
 	}
+	private void RemoveDup(ArrayList<node_data> ans) {
+		for(int i=1;i<ans.size();i++) {
+			if(ans.get(i-1)==ans.get(i)) {
+				ans.remove(i-1);
+			}
+		}
+		
+	}
+
 	/**
 	 * checks if all target nodes have been visited
 	 * helper of the TSP
