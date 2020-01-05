@@ -27,7 +27,9 @@ class Graph_AlgoTest {
 
 	@Test
 	void testIsConnected() {
-		fail("Not yet implemented"); // TODO
+		graphFactory gf = new graphFactory();
+		Graph_Algo ga = new Graph_Algo(gf.randomGraphSmallConnected());
+		if (!(ga.isConnected())) { fail(); }
 	}
 
 	@Test
