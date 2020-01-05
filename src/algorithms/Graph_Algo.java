@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -351,7 +352,39 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		graph copy = new DGraph(this.gr);
 		return copy;
 	}
-
-}
+	
+	public boolean equals(Object g) {
+		
+		if(g instanceof Graph_Algo) {
+			if(this.gr.getMC()==((Graph_Algo)g).gr.getMC()) {
+				
+				if(this.gr.edgeSize()==((Graph_Algo)g).gr.edgeSize()){
+					
+					for(int key:gr.nodesMap.keySet()) {
+						if(gr.nodesMap.get(key).getKey()!=((Graph_Algo)g).gr.nodesMap.get(key).getKey()) {
+							return false;
+							
+							}
+						for(HashMap<Integer, edge_data> key2:gr.edgesMap.values()) {
+							if(gr.edgesMap.containsKey(key)&&((Graph_Algo)g).gr.edgesMap.containsKey(key)) {
+								
+							}
+							return true;
+						
+						}
+						
+					}
+				}
+			}
+		}
+		if(g instanceof graph ) {
+			Graph_Algo t = new Graph_Algo((graph) g);
+			return this.equals(t);
+		}
+		return false;
+	}
+	
+	}
+	
 
 
