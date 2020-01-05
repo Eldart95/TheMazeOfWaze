@@ -17,27 +17,29 @@ import gui.graphFactory;
 
 class Graph_AlgoTest {
 
-//	@Test
-	void testInitSave() {
-	graphFactory g = new graphFactory();
-	graph t = g.randomGraphLarge();
-	Graph_Algo ga = new Graph_Algo(t);
-	ga.save("Test");
-	Graph_Algo n_ga = new Graph_Algo();
-	n_ga.init("Test");
-	if(!ga.equals(n_ga)) {fail();}
-	
-	}
-
-//	@Test
-	void testIsConnected() {
+	private static Graph_Algo factory() {
 		graphFactory gf = new graphFactory();
 		graph t = gf.randomGraphSmallConnected();
 		Graph_Algo ga = new Graph_Algo(t);
+		return ga;
+	}
+
+	@Test
+	void testInitSave() {
+	Graph_Algo ga = this.factory();
+	ga.save("Test");
+	Graph_Algo n_ga = new Graph_Algo();
+	n_ga.init("Test");
+	if(!ga.equals(n_ga)) { fail(); }
+	}
+
+	@Test
+	void testIsConnected() {
+		Graph_Algo ga = this.factory();
 		if (!(ga.isConnected())) { fail(); }
 	}
 
-//	@Test
+	@Test
 	void testShortestPathDist() {
 		graphFactory x = new graphFactory();
 		node_data a1 = x.nodeGenerator();
@@ -56,15 +58,12 @@ class Graph_AlgoTest {
 		ng.connect(a4.getKey(), a1.getKey(), 8);
 		ng.connect(a3.getKey(), a4.getKey(), 1);
 		Graph_Algo n=new Graph_Algo(ng);
-		assertEquals(n.shortestPathDist(a1.getKey(), a4.getKey()),9);
-		
+		assertEquals(n.shortestPathDist(a1.getKey(), a4.getKey()),9);	
 	}
 
 	@Test
 	void testShortestPath() {
-		graphFactory gf = new graphFactory();
-		graph t = gf.randomGraphSmallConnected();
-		Graph_Algo ga = new Graph_Algo(t);
+		Graph_Algo ga = this.factory();
 		List<node_data> l = ga.shortestPath(2, 5);
 		List<Integer> k = new ArrayList<Integer>();
 		k.add(2);
@@ -75,14 +74,8 @@ class Graph_AlgoTest {
 		k.add(5);
 		if(l.size()!=k.size()) {fail();}
 		for(int i=0;i<l.size();i++) {
-			if(l.get(i).getKey()!=k.get(i)) {fail();}
-				
+			if(l.get(i).getKey()!=k.get(i)) { fail(); }			
 		}
-	}
-
-	@Test
-	void testTSP() {
-		fail("Not yet implemented"); // TODO
 	}
 
 }
