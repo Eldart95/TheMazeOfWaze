@@ -9,8 +9,6 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-
 import algorithms.*;
 import dataStructure.*;
 import utils.*;
@@ -38,8 +35,8 @@ import utils.*;
  * @author YosefTwito and EldarTakach
  */
 
-public class GraphGui extends JFrame implements ActionListener, MouseListener{
-	//gggg
+public class GraphGui extends JFrame implements ActionListener{
+
 	private static final long serialVersionUID = 1L;
 
 	graph gr;
@@ -143,6 +140,10 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 		MenuItem item6 = new MenuItem("The SalesMan Problem");
 		item6.addActionListener(this);
 		alg.add(item6);
+		
+		MenuItem item13 = new MenuItem("Draw new-Added Nodes");
+		item13.addActionListener(this);
+		file.add(item13);
 
 	}
 
@@ -154,7 +155,20 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 
 		switch(str) {
 
-		case "Init Original Graph": 
+		case "Draw new-Added Nodes": 
+			if (this.gr.getMC()!=this.original.getMC()) {
+				this.original = new DGraph((DGraph) this.gr);
+				System.out.println("Drew new Added Nodes");
+				initGUI(this.original);
+			}
+			break;
+
+		case "Init Original Graph":
+			if (this.gr.getMC()!=this.original.getMC()) {
+				this.original = new DGraph((DGraph) this.gr);
+				System.out.println("Drew new Added Nodes");
+				initGUI(this.original);
+			}
 			initGUI(this.original);
 			break;
 
@@ -454,15 +468,4 @@ public class GraphGui extends JFrame implements ActionListener, MouseListener{
 			break;
 		}
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {;}
-	@Override
-	public void mousePressed(MouseEvent e) {;}
-	@Override
-	public void mouseReleased(MouseEvent e) {;}
-	@Override
-	public void mouseEntered(MouseEvent e) {;}
-	@Override
-	public void mouseExited(MouseEvent e) {;}
 }
