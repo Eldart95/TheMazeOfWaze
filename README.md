@@ -5,7 +5,7 @@
 
 ## Overview
 This project is about Directed Weighted Graphs. Developing a data Structure of it, creating nodes and edges, and handling them in Java.
-Including some useful functions (Computing shortest path between nodes, check if 2 nodes are connected and some more functions) described in the wiki pages. This project is able to make a gui window (with JFrame) and use it to draw the graph we created.
+Including some useful functions (Computing shortest path between nodes, check if the graph is connected and some more functions) described in the wiki pages. This project is able to make a gui window (with JFrame) and use it to draw the graph we created.
 
 ### Simple Main-code for example:
 ![Main](https://user-images.githubusercontent.com/57401163/71642032-ddc71e80-2cad-11ea-8855-fa235bbda88d.png)
